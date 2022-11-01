@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns="http://www.w3.org/1999/xhtml">
+<meta charset="UTF-8" />
+<head th:replace="~{common/base :: header}"></head>
+<body>
+	<div th:replace="~{common/base :: logo}"></div>
+	<div class="container">
+		<div th:replace="~{common/base :: titulo('Login')}"></div>
+		<div class="card mb-3">
+			<form th:action="@{/security/login}" class="card-body" method="post">
+				<div class="form-group">
+					<label for="username">Usuário</label> <input name="username"
+						class="form-control" placeholder="usuário" />
+				</div>
+				<div class="form-group">
+					<label for="password">Senha</label> <input type="password"
+						name="password" class="form-control" placeholder="senha" />
+				</div>
+				<button class="btn btn-primary" type="submit">Login</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
