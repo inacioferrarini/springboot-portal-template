@@ -1,0 +1,33 @@
+package com.inacioferrarini.template.portal.sample.security.api.requests;
+
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+public class AuthenticateRequestDTO {
+
+	@NotEmpty
+	@Length(min = 8, max = 25)
+	private final String username;
+
+	@NotEmpty
+	@Length(min = 8, max = 25)
+	private final String password;
+
+	public AuthenticateRequestDTO(
+		String username,
+		String password
+	) {
+		this.username = username;
+		this.password = password;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+}
