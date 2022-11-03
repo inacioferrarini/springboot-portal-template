@@ -10,6 +10,7 @@ public class SecurityController {
 
 	public static final String BASE_MAPPING = "/security";
 	public static final String LOGIN_MAPPING = "/login";
+	public static final String LOGOUT_MAPPING = "/logout";
 
 	private static final String LOGIN_VIEW = "security/login";
 

@@ -35,7 +35,7 @@ public class SecurityConfigurations {
 		final String loginPageUrl = SecurityController.BASE_MAPPING.concat(SecurityController.LOGIN_MAPPING);
 		final String loginProcessUrl = SecurityController.BASE_MAPPING.concat(SecurityController.LOGIN_MAPPING);
 		final String loginSuccessUrl = SampleController.BASE_MAPPING.concat(SampleController.INDEX_MAPPING);
-		final String logoutUrl = "/security/logout";
+		final String logoutUrl = SecurityController.BASE_MAPPING.concat(SecurityController.LOGOUT_MAPPING);
 		final String logoutSuccessUrl = SecurityController.BASE_MAPPING.concat(SecurityController.LOGIN_MAPPING);
 
 		http.authorizeRequests()
