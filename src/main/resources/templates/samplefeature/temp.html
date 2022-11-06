@@ -3,11 +3,30 @@
 	xmlns="http://www.w3.org/1999/xhtml">
 <meta charset="UTF-8" />
 <head th:replace="~{common/base :: header}"></head>
-<body>
-	<div th:replace="~{common/base :: logo}"></div>
+<body>	
 	<div class="container">
-		<div th:replace="~{common/base :: titulo('Sample Feature')}"></div>
-		<div class="card mb-3">SAMPLE FEATURE</div>
+		<div th:replace="~{common/base :: logo}"></div>
+		<div class="card mb-3 justify-content-center">
+			<div th:replace="~{common/base :: titulo('Welcome')}"></div>
+			<p class="h2 text-center">Finish creating your account.</p>
+			<br />
+			<p class="text-center">Hi, <strong>{username}.</strong></p>
+			<br />
+			<p class="text-center">
+				First, you need to confirm your account. Just press the button below.
+			</p>
+			<p class="text-center">
+				<a th:href="${verificationURL}" class="btn btn-primary">Validate Account</a>			
+			</p>
+			<br />
+			<p class="text-center">
+				if you experience any issues with the button above, copy and paste the URL below into your web browser.
+				<br />
+				https://localhost:8443/portal-template/user/activate?token=DzBazuM4YRTmqzlZFpGDWxoF1WJaoSdhMoXKiI-9C7N3EQM_sCu--K9j_jYfV75F
+			</p>
+			<br />
+			<p class="text-center">This email is valid for 24 hours.</p>
+		</div>
 	</div>
 </body>
 </html>

@@ -8,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
+import com.inacioferrarini.template.portal.sample.security.api.requests.ActivateUserAccountRequestDTO;
 import com.inacioferrarini.template.portal.sample.security.api.requests.AuthenticateRequestDTO;
 import com.inacioferrarini.template.portal.sample.security.dto.JWTTokenDTO;
 
@@ -33,6 +34,15 @@ public class ApiRequestFactoryImpl implements ApiRequestFactory {
 		createAuthenticationRequestEntity(AuthenticateRequestDTO authenticateRequestDTO) {
 		HttpHeaders headers = getHeaders();
 		HttpEntity<AuthenticateRequestDTO> requestEntity = new HttpEntity<>(authenticateRequestDTO, headers);
+		return requestEntity;
+	}
+
+	@Override
+	public
+		HttpEntity<ActivateUserAccountRequestDTO>
+		createActivateAccountRequestEntity(ActivateUserAccountRequestDTO activateAccountRequestDTO) {
+		HttpHeaders headers = getHeaders();
+		HttpEntity<ActivateUserAccountRequestDTO> requestEntity = new HttpEntity<>(activateAccountRequestDTO, headers);
 		return requestEntity;
 	}
 

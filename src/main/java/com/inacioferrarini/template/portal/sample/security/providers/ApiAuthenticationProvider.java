@@ -17,6 +17,7 @@ import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequ
 import com.inacioferrarini.template.portal.sample.security.api.requests.AuthenticateRequestDTO;
 import com.inacioferrarini.template.portal.sample.security.dto.ApiUserDTO;
 import com.inacioferrarini.template.portal.sample.security.dto.JWTTokenDTO;
+import com.inacioferrarini.template.portal.sample.security.resources.SecurityResources;
 
 @Component
 public class ApiAuthenticationProvider implements AuthenticationProvider {
@@ -37,14 +38,17 @@ public class ApiAuthenticationProvider implements AuthenticationProvider {
 		HttpEntity<AuthenticateRequestDTO> requestEntity = apiRequestFactory
 			.createAuthenticationRequestEntity(authenticateRequestDTO);
 		try {
-			ResponseEntity<JWTTokenDTO> tokenResponse = restTemplate
-				.postForEntity("/auth", requestEntity, JWTTokenDTO.class);
-			
+			ResponseEntity<JWTTokenDTO> tokenResponse = restTemplate.postForEntity(
+				SecurityResources.Paths.Api.AUTHENTICATE,
+				requestEntity,
+				JWTTokenDTO.class
+			);
+
 			ApiUserDTO apiUserDTO = new ApiUserDTO(authentication.getName(), tokenResponse.getBody());
-	
+
 			return new UsernamePasswordAuthenticationToken(apiUserDTO, null, new ArrayList<>());
 		} catch (BadRequest exception) {
-			// TODO: Convert Error to DTO			
+			// TODO: Convert Error to DTO
 			System.out.println("@@" + exception.getResponseBodyAsString() + "@@");
 			return null;
 		}

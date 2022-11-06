@@ -12,6 +12,7 @@ public class MessageSourceConfigurations {
 	public MessageSource messageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 		messageSource.setBasenames(
+			"classpath:/messages/temp",
 			"classpath:/messages/security/ui-actions",
 			"classpath:/messages/security/ui-fields-names",
 			"classpath:/messages/security/ui-titles"
