@@ -4,12 +4,12 @@ import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ActivateUserAccountRequestDTO {
+public class ActivateUserAccountApiRequestDTO {
 
 	@NotEmpty
 	private final String token;
 
-	public ActivateUserAccountRequestDTO(
+	public ActivateUserAccountApiRequestDTO(
 		@JsonProperty("token") String token
 	) {
 		this.token = token;

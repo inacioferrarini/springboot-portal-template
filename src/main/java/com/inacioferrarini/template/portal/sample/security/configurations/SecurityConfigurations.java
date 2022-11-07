@@ -34,6 +34,7 @@ public class SecurityConfigurations {
 
 		http.authorizeRequests()
 			.antMatchers(HttpMethod.GET, SecurityResources.Paths.Configuration.ACTIVATE_ACCOUNT).permitAll()
+			.antMatchers(SecurityResources.Paths.Configuration.FORGOT_USERNAME).permitAll()
 			.anyRequest().authenticated()
 			.and()
 			.formLogin(

@@ -14,7 +14,7 @@ public class MessageSourceConfigurations {
 		messageSource.setBasenames(
 			"classpath:/messages/temp",
 			"classpath:/messages/security/ui-actions",
-			"classpath:/messages/security/ui-fields-names",
+			"classpath:/messages/security/ui-fields",
 			"classpath:/messages/security/ui-titles"
 		);
 		messageSource.setDefaultEncoding("UTF-8");

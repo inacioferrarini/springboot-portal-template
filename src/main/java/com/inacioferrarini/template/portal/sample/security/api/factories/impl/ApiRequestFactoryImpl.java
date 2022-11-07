@@ -8,8 +8,9 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
-import com.inacioferrarini.template.portal.sample.security.api.requests.ActivateUserAccountRequestDTO;
-import com.inacioferrarini.template.portal.sample.security.api.requests.AuthenticateRequestDTO;
+import com.inacioferrarini.template.portal.sample.security.api.requests.ActivateUserAccountApiRequestDTO;
+import com.inacioferrarini.template.portal.sample.security.api.requests.AuthenticateApiRequestDTO;
+import com.inacioferrarini.template.portal.sample.security.api.requests.ForgotUsernameApiRequestDTO;
 import com.inacioferrarini.template.portal.sample.security.dto.JWTTokenDTO;
 
 @Component
@@ -30,19 +31,32 @@ public class ApiRequestFactoryImpl implements ApiRequestFactory {
 
 	@Override
 	public
-		HttpEntity<AuthenticateRequestDTO>
-		createAuthenticationRequestEntity(AuthenticateRequestDTO authenticateRequestDTO) {
+		HttpEntity<AuthenticateApiRequestDTO>
+		createAuthenticationApiRequestEntity(AuthenticateApiRequestDTO authenticateApiRequestDTO) {
 		HttpHeaders headers = getHeaders();
-		HttpEntity<AuthenticateRequestDTO> requestEntity = new HttpEntity<>(authenticateRequestDTO, headers);
+		HttpEntity<AuthenticateApiRequestDTO> requestEntity = new HttpEntity<>(authenticateApiRequestDTO, headers);
 		return requestEntity;
 	}
 
 	@Override
 	public
-		HttpEntity<ActivateUserAccountRequestDTO>
-		createActivateAccountRequestEntity(ActivateUserAccountRequestDTO activateAccountRequestDTO) {
+		HttpEntity<ActivateUserAccountApiRequestDTO>
+		createActivateAccountApiRequestEntity(ActivateUserAccountApiRequestDTO activateAccountApiRequestDTO) {
 		HttpHeaders headers = getHeaders();
-		HttpEntity<ActivateUserAccountRequestDTO> requestEntity = new HttpEntity<>(activateAccountRequestDTO, headers);
+		HttpEntity<ActivateUserAccountApiRequestDTO> requestEntity = new HttpEntity<>(
+			activateAccountApiRequestDTO, headers
+		);
+		return requestEntity;
+	}
+
+	@Override
+	public
+		HttpEntity<ForgotUsernameApiRequestDTO>
+		createForgotUsernameApiRequestEntity(ForgotUsernameApiRequestDTO forgotUsernameApiRequestDTO) {
+		HttpHeaders headers = getHeaders();
+		HttpEntity<ForgotUsernameApiRequestDTO> requestEntity = new HttpEntity<>(
+			forgotUsernameApiRequestDTO, headers
+		);
 		return requestEntity;
 	}
 

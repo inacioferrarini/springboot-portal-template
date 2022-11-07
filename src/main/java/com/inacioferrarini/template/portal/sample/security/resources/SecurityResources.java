@@ -18,6 +18,7 @@ public class SecurityResources {
 			public static final String ROOT = "/security";
 			public static final String LOGIN = "/login";
 			public static final String ACTIVATE_ACCOUNT = "/activateAccount";
+			public static final String FORGOT_USERNAME = "/forgotUsername";
 			public static final String LOGOUT = "/logout";
 
 		}
@@ -36,6 +37,8 @@ public class SecurityResources {
 				.concat(SecurityResources.Paths.Security.LOGIN);
 			public static final String ACTIVATE_ACCOUNT = SecurityResources.Paths.Security.ROOT
 				.concat(SecurityResources.Paths.Security.ACTIVATE_ACCOUNT);
+			public static final String FORGOT_USERNAME = SecurityResources.Paths.Security.ROOT
+				.concat(SecurityResources.Paths.Security.FORGOT_USERNAME);
 
 		}
 
@@ -43,8 +46,9 @@ public class SecurityResources {
 
 	public static class Views {
 
-		public static final String LOGIN = "security/login";
+		public static final String LOGIN_FORM = "security/login-form";
 		public static final String ACTIVATE_ACCOUNT_SUCCESS = "security/activate-account-success";
+		public static final String FORGOT_USERNAME_FORM = "security/forgot-username-form";
 
 	}
 

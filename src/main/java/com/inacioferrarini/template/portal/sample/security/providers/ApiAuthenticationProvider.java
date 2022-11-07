@@ -14,7 +14,7 @@ import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.client.RestTemplate;
 
 import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
-import com.inacioferrarini.template.portal.sample.security.api.requests.AuthenticateRequestDTO;
+import com.inacioferrarini.template.portal.sample.security.api.requests.AuthenticateApiRequestDTO;
 import com.inacioferrarini.template.portal.sample.security.dto.ApiUserDTO;
 import com.inacioferrarini.template.portal.sample.security.dto.JWTTokenDTO;
 import com.inacioferrarini.template.portal.sample.security.resources.SecurityResources;
@@ -31,12 +31,16 @@ public class ApiAuthenticationProvider implements AuthenticationProvider {
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-		AuthenticateRequestDTO authenticateRequestDTO = new AuthenticateRequestDTO(
+		AuthenticateApiRequestDTO authenticateRequestDTO = new AuthenticateApiRequestDTO(
 			authentication.getName(),
 			authentication.getCredentials().toString()
 		);
-		HttpEntity<AuthenticateRequestDTO> requestEntity = apiRequestFactory
-			.createAuthenticationRequestEntity(authenticateRequestDTO);
+		//
+		// TODO: Execute validation on authenticateRequestDTO
+		// If field errors, throw an exception so it can be catch and directed to the Login Form.
+		//
+		HttpEntity<AuthenticateApiRequestDTO> requestEntity = apiRequestFactory
+			.createAuthenticationApiRequestEntity(authenticateRequestDTO);
 		try {
 			ResponseEntity<JWTTokenDTO> tokenResponse = restTemplate.postForEntity(
 				SecurityResources.Paths.Api.AUTHENTICATE,
@@ -48,7 +52,7 @@ public class ApiAuthenticationProvider implements AuthenticationProvider {
 
 			return new UsernamePasswordAuthenticationToken(apiUserDTO, null, new ArrayList<>());
 		} catch (BadRequest exception) {
-			// TODO: Convert Error to DTO
+			// Throw and Exception and throw it, so it can be catch and redirected to login form
 			System.out.println("@@" + exception.getResponseBodyAsString() + "@@");
 			return null;
 		}

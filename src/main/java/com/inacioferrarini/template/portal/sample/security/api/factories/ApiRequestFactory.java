@@ -2,14 +2,19 @@ package com.inacioferrarini.template.portal.sample.security.api.factories;
 
 import org.springframework.http.HttpEntity;
 
-import com.inacioferrarini.template.portal.sample.security.api.requests.ActivateUserAccountRequestDTO;
-import com.inacioferrarini.template.portal.sample.security.api.requests.AuthenticateRequestDTO;
+import com.inacioferrarini.template.portal.sample.security.api.requests.ActivateUserAccountApiRequestDTO;
+import com.inacioferrarini.template.portal.sample.security.api.requests.AuthenticateApiRequestDTO;
+import com.inacioferrarini.template.portal.sample.security.api.requests.ForgotUsernameApiRequestDTO;
 
 public interface ApiRequestFactory {
 
-	HttpEntity<AuthenticateRequestDTO> createAuthenticationRequestEntity(AuthenticateRequestDTO authenticateRequestDTO);
+	HttpEntity<AuthenticateApiRequestDTO>
+		createAuthenticationApiRequestEntity(AuthenticateApiRequestDTO authenticateApiRequestDTO);
 
-	HttpEntity<ActivateUserAccountRequestDTO>
-		createActivateAccountRequestEntity(ActivateUserAccountRequestDTO activateAccountRequestDTO);
+	HttpEntity<ActivateUserAccountApiRequestDTO>
+		createActivateAccountApiRequestEntity(ActivateUserAccountApiRequestDTO activateAccountApiRequestDTO);
+
+	HttpEntity<ForgotUsernameApiRequestDTO>
+		createForgotUsernameApiRequestEntity(ForgotUsernameApiRequestDTO forgotUsernameApiRequestDTO);
 
 }
