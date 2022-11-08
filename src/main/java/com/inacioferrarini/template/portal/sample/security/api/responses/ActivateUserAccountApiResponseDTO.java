@@ -1,13 +1,13 @@
 package com.inacioferrarini.template.portal.sample.security.api.responses;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.inacioferrarini.template.portal.sample.security.enums.ActivateUserAccountStatusType;
+import com.inacioferrarini.template.portal.sample.security.api.enums.ActivateUserAccountStatusType;
 
-public class ActivateUserAccountResponseDTO {
+public class ActivateUserAccountApiResponseDTO {
 
 	private final ActivateUserAccountStatusType status;
 
-	public ActivateUserAccountResponseDTO(
+	public ActivateUserAccountApiResponseDTO(
 		@JsonProperty("status") ActivateUserAccountStatusType status
 	) {
 		this.status = status;

@@ -10,6 +10,7 @@ public class SecurityResources {
 
 			public static final String ACTIVATE_USER = "/user/activate";
 			public static final String AUTHENTICATE = "/auth";
+			public static final String FORGOT_USERNAME = "/user/forgotUsername";
 
 		}
 

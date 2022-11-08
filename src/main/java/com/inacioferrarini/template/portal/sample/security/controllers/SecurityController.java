@@ -17,7 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
 import com.inacioferrarini.template.portal.sample.security.api.requests.ActivateUserAccountApiRequestDTO;
-import com.inacioferrarini.template.portal.sample.security.api.responses.ActivateUserAccountResponseDTO;
+import com.inacioferrarini.template.portal.sample.security.api.requests.ForgotUsernameApiRequestDTO;
+import com.inacioferrarini.template.portal.sample.security.api.responses.ActivateUserAccountApiResponseDTO;
+import com.inacioferrarini.template.portal.sample.security.api.responses.ForgotUsernameApiResponseDTO;
 import com.inacioferrarini.template.portal.sample.security.controllers.forms.ForgotUsernameRequestDTO;
 import com.inacioferrarini.template.portal.sample.security.resources.SecurityResources;
 
@@ -50,10 +52,10 @@ public class SecurityController {
 		HttpEntity<ActivateUserAccountApiRequestDTO> requestEntity = apiRequestFactory
 			.createActivateAccountApiRequestEntity(activateAccountRequestDTO);
 		try {
-			ResponseEntity<ActivateUserAccountResponseDTO> response = restTemplate.postForEntity(
+			ResponseEntity<ActivateUserAccountApiResponseDTO> response = restTemplate.postForEntity(
 				SecurityResources.Paths.Api.ACTIVATE_USER,
 				requestEntity,
-				ActivateUserAccountResponseDTO.class
+				ActivateUserAccountApiResponseDTO.class
 			);
 
 			System.out.println("Received status: " + response.getBody().getStatus());
@@ -81,16 +83,27 @@ public class SecurityController {
 			return SecurityResources.Views.FORGOT_USERNAME_FORM;
 		}
 
-		System.out.println("Post do forgot username " + forgotUsernameRequestDTO.getEmail());
-		//
-		// TODO: Send API request
-		//
-		// Set Status Message.
-		//
-		// Error? return SecurityResources.Views.FORGOT_USERNAME;
-		// No Error? return "Username was sent" 
-		
-		return SecurityResources.Views.FORGOT_USERNAME_FORM; // TODO:
+		ForgotUsernameApiRequestDTO forgotUsernameApiRequestDTO = new ForgotUsernameApiRequestDTO(
+			forgotUsernameRequestDTO.getEmail()
+		);
+		HttpEntity<ForgotUsernameApiRequestDTO> requestEntity = apiRequestFactory
+			.createForgotUsernameApiRequestEntity(forgotUsernameApiRequestDTO);
+		try {
+			ResponseEntity<ForgotUsernameApiResponseDTO> response = restTemplate.postForEntity(
+				SecurityResources.Paths.Api.FORGOT_USERNAME,
+				requestEntity,
+				ForgotUsernameApiResponseDTO.class
+			);
+
+			System.out.println("Received status: " + response.getBody().getStatus());
+			System.out.println("Received message: " + response.getBody().getMessage());
+
+		} catch (BadRequest exception) {
+			System.out.println("Exception: @@" + exception.getResponseBodyAsString() + "@@");
+			// Error? Success? Redirect to Error
+		}
+
+		return SecurityResources.Views.FORGOT_USERNAME_FORM; // Success? Redirect to Login
 	}
 
 }
