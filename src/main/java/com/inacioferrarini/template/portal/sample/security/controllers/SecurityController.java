@@ -25,7 +25,7 @@ import com.inacioferrarini.template.portal.sample.security.api.responses.ForgotP
 import com.inacioferrarini.template.portal.sample.security.api.responses.ForgotUsernameApiResponseDTO;
 import com.inacioferrarini.template.portal.sample.security.api.responses.PasswordResetApiResponseDto;
 import com.inacioferrarini.template.portal.sample.security.controllers.forms.ForgotPasswordForm;
-import com.inacioferrarini.template.portal.sample.security.controllers.forms.ForgotUsernameRequestDTO;
+import com.inacioferrarini.template.portal.sample.security.controllers.forms.ForgotUsernameForm;
 import com.inacioferrarini.template.portal.sample.security.controllers.forms.PasswordResetForm;
 import com.inacioferrarini.template.portal.sample.security.resources.SecurityResources;
 
@@ -79,14 +79,16 @@ public class SecurityController {
 	}
 
 	@GetMapping(SecurityResources.Paths.Security.FORGOT_USERNAME)
-	public String showForgotUsernamePage(ForgotUsernameRequestDTO forgotUsernameRequestDTO) {
-		forgotUsernameRequestDTO.setEmail("");
+	public String showForgotUsernamePage(
+		ForgotUsernameForm form
+	) {
+		form.setEmail("");
 		return SecurityResources.Views.FORGOT_USERNAME_FORM;
 	}
 
 	@PostMapping(SecurityResources.Paths.Security.FORGOT_USERNAME)
 	public String sendForgotUsername(
-		@Valid ForgotUsernameRequestDTO forgotUsernameRequestDTO,
+		@Valid ForgotUsernameForm form,
 		BindingResult result
 	) {
 		if (result.hasErrors()) {
@@ -94,7 +96,7 @@ public class SecurityController {
 		}
 
 		ForgotUsernameApiRequestDTO forgotUsernameApiRequestDTO = new ForgotUsernameApiRequestDTO(
-			forgotUsernameRequestDTO.getEmail()
+			form.getEmail()
 		);
 		HttpEntity<ForgotUsernameApiRequestDTO> requestEntity = apiRequestFactory
 			.requestEntity(forgotUsernameApiRequestDTO);
@@ -121,14 +123,16 @@ public class SecurityController {
 	}
 
 	@GetMapping(SecurityResources.Paths.Security.FORGOT_PASSWORD)
-	public String showForgotPasswordPage(ForgotPasswordForm forgotPasswordForm) {
-		forgotPasswordForm.setUsername("");
+	public String showForgotPasswordPage(
+		ForgotPasswordForm form
+	) {
+		form.setUsername("");
 		return SecurityResources.Views.FORGOT_PASSWORD_FORM;
 	}
 
 	@PostMapping(SecurityResources.Paths.Security.FORGOT_PASSWORD)
 	public String sendForgotPassword(
-		@Valid ForgotPasswordForm forgotPasswordForm,
+		@Valid ForgotPasswordForm form,
 		BindingResult result
 	) {
 		if (result.hasErrors()) {
@@ -136,7 +140,7 @@ public class SecurityController {
 		}
 
 		ForgotPasswordApiRequestDto apiRequest = new ForgotPasswordApiRequestDto(
-			forgotPasswordForm.getUsername()
+			form.getUsername()
 		);
 		HttpEntity<ForgotPasswordApiRequestDto> requestEntity = apiRequestFactory
 			.requestEntity(apiRequest);
@@ -165,17 +169,17 @@ public class SecurityController {
 	@GetMapping(SecurityResources.Paths.Security.PASSWORD_RESET)
 	public String showPasswordResetPage(
 		@RequestParam(name = TOKEN_KEY) String token,
-		PasswordResetForm passwordResetForm,
+		PasswordResetForm form,
 		ModelAndView modelAndView
 	) {
-		passwordResetForm.setNewPassword("");
-		passwordResetForm.setToken(token);
+		form.setNewPassword("");
+		form.setToken(token);
 		return SecurityResources.Views.PASSWORD_RESET_FORM;
 	}
 
 	@PostMapping(SecurityResources.Paths.Security.PASSWORD_RESET)
 	public String sendPasswordReset(
-		@Valid PasswordResetForm passwordResetForm,
+		@Valid PasswordResetForm form,
 		BindingResult result
 	) {
 		if (result.hasErrors()) {
@@ -183,8 +187,8 @@ public class SecurityController {
 		}
 
 		PasswordResetApiRequestDto apiRequest = new PasswordResetApiRequestDto(
-			passwordResetForm.getToken(),
-			passwordResetForm.getNewPassword()
+			form.getToken(),
+			form.getNewPassword()
 		);
 		HttpEntity<PasswordResetApiRequestDto> requestEntity = apiRequestFactory
 			.requestEntity(apiRequest);
@@ -198,7 +202,7 @@ public class SecurityController {
 			// TODO: Set flash message success
 
 			System.out.println("Received status: " + response.getBody().getStatus());
-			
+
 		} catch (BadRequest exception) {
 			System.out.println("Exception: @@" + exception.getResponseBodyAsString() + "@@");
 			// Error? Success? Redirect to Error

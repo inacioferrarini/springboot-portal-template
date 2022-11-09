@@ -3,13 +3,13 @@ package com.inacioferrarini.template.portal.sample.security.controllers.forms;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
-public class ForgotUsernameRequestDTO {
+public class ForgotUsernameForm {
 
 	@NotEmpty
 	@Email
 	private String email;
 
-	public ForgotUsernameRequestDTO() {
+	public ForgotUsernameForm() {
 	}
 
 	public String getEmail() {
