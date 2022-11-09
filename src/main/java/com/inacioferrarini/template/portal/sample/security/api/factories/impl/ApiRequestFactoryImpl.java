@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
 import com.inacioferrarini.template.portal.sample.security.api.requests.ActivateUserAccountApiRequestDTO;
 import com.inacioferrarini.template.portal.sample.security.api.requests.AuthenticateApiRequestDTO;
+import com.inacioferrarini.template.portal.sample.security.api.requests.ForgotPasswordApiRequestDto;
 import com.inacioferrarini.template.portal.sample.security.api.requests.ForgotUsernameApiRequestDTO;
 import com.inacioferrarini.template.portal.sample.security.dto.JWTTokenDTO;
 
@@ -56,6 +57,17 @@ public class ApiRequestFactoryImpl implements ApiRequestFactory {
 		HttpHeaders headers = getHeaders();
 		HttpEntity<ForgotUsernameApiRequestDTO> requestEntity = new HttpEntity<>(
 			forgotUsernameApiRequestDTO, headers
+		);
+		return requestEntity;
+	}
+
+	@Override
+	public
+		HttpEntity<ForgotPasswordApiRequestDto>
+		createForgotPasswordApiRequestEntity(ForgotPasswordApiRequestDto forgotPasswordApiRequestDto) {
+		HttpHeaders headers = getHeaders();
+		HttpEntity<ForgotPasswordApiRequestDto> requestEntity = new HttpEntity<>(
+			forgotPasswordApiRequestDto, headers
 		);
 		return requestEntity;
 	}

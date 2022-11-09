@@ -17,9 +17,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
 import com.inacioferrarini.template.portal.sample.security.api.requests.ActivateUserAccountApiRequestDTO;
+import com.inacioferrarini.template.portal.sample.security.api.requests.ForgotPasswordApiRequestDto;
 import com.inacioferrarini.template.portal.sample.security.api.requests.ForgotUsernameApiRequestDTO;
 import com.inacioferrarini.template.portal.sample.security.api.responses.ActivateUserAccountApiResponseDTO;
+import com.inacioferrarini.template.portal.sample.security.api.responses.ForgotPasswordApiResponseDto;
 import com.inacioferrarini.template.portal.sample.security.api.responses.ForgotUsernameApiResponseDTO;
+import com.inacioferrarini.template.portal.sample.security.controllers.forms.ForgotPasswordForm;
 import com.inacioferrarini.template.portal.sample.security.controllers.forms.ForgotUsernameRequestDTO;
 import com.inacioferrarini.template.portal.sample.security.resources.SecurityResources;
 
@@ -38,6 +41,7 @@ public class SecurityController {
 
 	@GetMapping(SecurityResources.Paths.Security.LOGIN)
 	public String showLoginPage() {
+		System.out.println("@@DEBUG: showLoginPage()@@");
 		return SecurityResources.Views.LOGIN_FORM;
 	}
 
@@ -58,20 +62,17 @@ public class SecurityController {
 				ActivateUserAccountApiResponseDTO.class
 			);
 
+			// TODO: Set flash message success
+			
 			System.out.println("Received status: " + response.getBody().getStatus());
 		} catch (BadRequest exception) {
 			// TODO: Convert Error to DTO
 			System.out.println("@@" + exception.getResponseBodyAsString() + "@@");
 			// TODO: return error page redirection
 		}
-		
-		//
-		//
-		// TODO: Redirect to LoginForm with a flash message having "Activation Success".
-		//
-		//
-		
-		return SecurityResources.Views.ACTIVATE_ACCOUNT_SUCCESS;
+
+		// TODO: Redirect to login
+		return SecurityResources.Views.LOGIN_FORM;
 	}
 
 	@GetMapping(SecurityResources.Paths.Security.FORGOT_USERNAME)
@@ -100,16 +101,65 @@ public class SecurityController {
 				requestEntity,
 				ForgotUsernameApiResponseDTO.class
 			);
+			
+			// TODO: Set flash message success
 
+			System.out.println("Received status: " + response.getBody().getStatus());
+			System.out.println("Received message: " + response.getBody().getMessage());
+			
+		} catch (BadRequest exception) {
+			System.out.println("Exception: @@" + exception.getResponseBodyAsString() + "@@");
+			// Error? Success? Redirect to Error
+			return SecurityResources.Views.FORGOT_USERNAME_FORM;
+		}
+
+		// TODO: Redirect to login
+		return SecurityResources.Views.FORGOT_USERNAME_FORM;
+	}
+
+	@GetMapping(SecurityResources.Paths.Security.FORGOT_PASSWORD)
+	public String showForgotPasswordPage(ForgotPasswordForm forgotPasswordForm) {
+		forgotPasswordForm.setUsername("");
+		return SecurityResources.Views.FORGOT_PASSWORD_FORM;
+	}
+
+	@PostMapping(SecurityResources.Paths.Security.FORGOT_PASSWORD)
+	public String sendForgotPassword(
+		@Valid ForgotPasswordForm forgotPasswordForm,
+		BindingResult result
+	) {
+		if (result.hasErrors()) {
+			return SecurityResources.Views.FORGOT_PASSWORD_FORM;
+		}
+
+		System.out.println("@@ send forgot password @@");
+
+		ForgotPasswordApiRequestDto apiRequest = new ForgotPasswordApiRequestDto(
+			forgotPasswordForm.getUsername()
+		);
+		HttpEntity<ForgotPasswordApiRequestDto> requestEntity = apiRequestFactory
+			.createForgotPasswordApiRequestEntity(apiRequest);
+
+		try {
+			ResponseEntity<ForgotPasswordApiResponseDto> response = restTemplate.postForEntity(
+				SecurityResources.Paths.Api.FORGOT_PASSWORD,
+				requestEntity,
+				ForgotPasswordApiResponseDto.class
+			);
+
+			// TODO: Set flash message success
+			
 			System.out.println("Received status: " + response.getBody().getStatus());
 			System.out.println("Received message: " + response.getBody().getMessage());
 
 		} catch (BadRequest exception) {
 			System.out.println("Exception: @@" + exception.getResponseBodyAsString() + "@@");
 			// Error? Success? Redirect to Error
+			return SecurityResources.Views.FORGOT_PASSWORD_FORM;
 		}
 
-		return SecurityResources.Views.FORGOT_USERNAME_FORM; // Success? Redirect to Login
+		// TODO: Redirect to login
+		return SecurityResources.Views.FORGOT_PASSWORD_FORM;
 	}
 
 }
