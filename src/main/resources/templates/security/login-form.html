@@ -13,13 +13,13 @@
 					<label for="username">
 						<span th:text="#{field.username}"/></span>
 					</label>
-					<input name="username" class="form-control" placeholder="usuário" />
+					<input name="username" class="form-control" th:placeholder="#{field.username}" />
 				</div>
 				<div class="form-group">
 					<label for="password">
 						<span th:text="#{field.password}"/></span>
 					</label>
-					<input type="password" name="password" class="form-control" placeholder="senha" />
+					<input type="password" name="password" class="form-control" th:placeholder="#{field.password}" />
 				</div>
 				<button class="btn btn-primary" type="submit">
 					<span th:text="#{action.doLogin}"/></span>

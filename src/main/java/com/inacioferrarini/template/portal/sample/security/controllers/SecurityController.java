@@ -64,7 +64,13 @@ public class SecurityController {
 			System.out.println("@@" + exception.getResponseBodyAsString() + "@@");
 			// TODO: return error page redirection
 		}
-
+		
+		//
+		//
+		// TODO: Redirect to LoginForm with a flash message having "Activation Success".
+		//
+		//
+		
 		return SecurityResources.Views.ACTIVATE_ACCOUNT_SUCCESS;
 	}
 

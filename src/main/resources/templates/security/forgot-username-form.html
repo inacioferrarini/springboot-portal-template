@@ -13,7 +13,7 @@
 					<label for="email">
 						<span th:text="#{field.email}"/></span>
 					</label>
-					<input th:field="*{email}" th:errorclass="is-invalid" class="form-control" th:placeholder="#{forgotUsername.email.placeholderText}"/>
+					<input th:field="*{email}" th:errorclass="is-invalid" class="form-control" th:placeholder="#{field.email}"/>
 					<small><span th:text="#{forgotUsername.email.description}"></span></small>
 					<div class="invalid-feedback" th:errors="*{email}"></div>
 				</div>
