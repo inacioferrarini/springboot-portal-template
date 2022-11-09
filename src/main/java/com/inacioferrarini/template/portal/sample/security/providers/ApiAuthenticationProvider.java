@@ -14,9 +14,9 @@ import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.client.RestTemplate;
 
 import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
-import com.inacioferrarini.template.portal.sample.security.api.requests.AuthenticateApiRequestDTO;
-import com.inacioferrarini.template.portal.sample.security.dto.ApiUserDTO;
-import com.inacioferrarini.template.portal.sample.security.dto.JWTTokenDTO;
+import com.inacioferrarini.template.portal.sample.security.api.requests.AuthenticateApiRequestDto;
+import com.inacioferrarini.template.portal.sample.security.dto.ApiUserDto;
+import com.inacioferrarini.template.portal.sample.security.dto.JWTTokenDto;
 import com.inacioferrarini.template.portal.sample.security.resources.SecurityResources;
 
 @Component
@@ -31,23 +31,23 @@ public class ApiAuthenticationProvider implements AuthenticationProvider {
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
-		AuthenticateApiRequestDTO authenticateRequestDTO = new AuthenticateApiRequestDTO(
+		AuthenticateApiRequestDto authenticateRequest = new AuthenticateApiRequestDto(
 			authentication.getName(),
 			authentication.getCredentials().toString()
 		);
 
-		HttpEntity<AuthenticateApiRequestDTO> requestEntity = apiRequestFactory
-			.requestEntity(authenticateRequestDTO);
+		HttpEntity<AuthenticateApiRequestDto> apiRequest = apiRequestFactory
+			.requestEntity(authenticateRequest);
 		try {
-			ResponseEntity<JWTTokenDTO> tokenResponse = restTemplate.postForEntity(
+			ResponseEntity<JWTTokenDto> apiResponse = restTemplate.postForEntity(
 				SecurityResources.Paths.Api.AUTHENTICATE,
-				requestEntity,
-				JWTTokenDTO.class
+				apiRequest,
+				JWTTokenDto.class
 			);
 
-			ApiUserDTO apiUserDTO = new ApiUserDTO(authentication.getName(), tokenResponse.getBody());
+			ApiUserDto apiUser = new ApiUserDto(authentication.getName(), apiResponse.getBody());
 
-			return new UsernamePasswordAuthenticationToken(apiUserDTO, null, new ArrayList<>());
+			return new UsernamePasswordAuthenticationToken(apiUser, null, new ArrayList<>());
 		} catch (BadRequest exception) {
 			// Throw and Exception and throw it, so it can be catch and redirected to login
 			// form

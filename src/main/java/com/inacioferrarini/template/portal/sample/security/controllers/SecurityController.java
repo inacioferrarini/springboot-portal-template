@@ -16,13 +16,13 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
-import com.inacioferrarini.template.portal.sample.security.api.requests.ActivateUserAccountApiRequestDTO;
+import com.inacioferrarini.template.portal.sample.security.api.requests.ActivateUserAccountApiRequestDto;
 import com.inacioferrarini.template.portal.sample.security.api.requests.ForgotPasswordApiRequestDto;
-import com.inacioferrarini.template.portal.sample.security.api.requests.ForgotUsernameApiRequestDTO;
+import com.inacioferrarini.template.portal.sample.security.api.requests.ForgotUsernameApiRequestDto;
 import com.inacioferrarini.template.portal.sample.security.api.requests.PasswordResetApiRequestDto;
-import com.inacioferrarini.template.portal.sample.security.api.responses.ActivateUserAccountApiResponseDTO;
+import com.inacioferrarini.template.portal.sample.security.api.responses.ActivateUserAccountApiResponseDto;
 import com.inacioferrarini.template.portal.sample.security.api.responses.ForgotPasswordApiResponseDto;
-import com.inacioferrarini.template.portal.sample.security.api.responses.ForgotUsernameApiResponseDTO;
+import com.inacioferrarini.template.portal.sample.security.api.responses.ForgotUsernameApiResponseDto;
 import com.inacioferrarini.template.portal.sample.security.api.responses.PasswordResetApiResponseDto;
 import com.inacioferrarini.template.portal.sample.security.controllers.forms.ForgotPasswordForm;
 import com.inacioferrarini.template.portal.sample.security.controllers.forms.ForgotUsernameForm;
@@ -53,21 +53,21 @@ public class SecurityController {
 		@RequestParam(name = TOKEN_KEY) String token,
 		ModelAndView modelAndView
 	) {
-		ActivateUserAccountApiRequestDTO activateAccountRequestDTO = new ActivateUserAccountApiRequestDTO(
+		ActivateUserAccountApiRequestDto activateAccountRequest = new ActivateUserAccountApiRequestDto(
 			token
 		);
-		HttpEntity<ActivateUserAccountApiRequestDTO> requestEntity = apiRequestFactory
-			.requestEntity(activateAccountRequestDTO);
+		HttpEntity<ActivateUserAccountApiRequestDto> apiRequest = apiRequestFactory
+			.requestEntity(activateAccountRequest);
 		try {
-			ResponseEntity<ActivateUserAccountApiResponseDTO> response = restTemplate.postForEntity(
+			ResponseEntity<ActivateUserAccountApiResponseDto> apiResponse = restTemplate.postForEntity(
 				SecurityResources.Paths.Api.ACTIVATE_USER,
-				requestEntity,
-				ActivateUserAccountApiResponseDTO.class
+				apiRequest,
+				ActivateUserAccountApiResponseDto.class
 			);
 
 			// TODO: Set flash message success
 
-			System.out.println("Received status: " + response.getBody().getStatus());
+			System.out.println("Received status: " + apiResponse.getBody().getStatus());
 		} catch (BadRequest exception) {
 			// TODO: Convert Error to DTO
 			System.out.println("@@" + exception.getResponseBodyAsString() + "@@");
@@ -95,22 +95,22 @@ public class SecurityController {
 			return SecurityResources.Views.FORGOT_USERNAME_FORM;
 		}
 
-		ForgotUsernameApiRequestDTO forgotUsernameApiRequestDTO = new ForgotUsernameApiRequestDTO(
+		ForgotUsernameApiRequestDto forgotUsernameApiRequest = new ForgotUsernameApiRequestDto(
 			form.getEmail()
 		);
-		HttpEntity<ForgotUsernameApiRequestDTO> requestEntity = apiRequestFactory
-			.requestEntity(forgotUsernameApiRequestDTO);
+		HttpEntity<ForgotUsernameApiRequestDto> apiRequest = apiRequestFactory
+			.requestEntity(forgotUsernameApiRequest);
 		try {
-			ResponseEntity<ForgotUsernameApiResponseDTO> response = restTemplate.postForEntity(
+			ResponseEntity<ForgotUsernameApiResponseDto> apiResponse = restTemplate.postForEntity(
 				SecurityResources.Paths.Api.FORGOT_USERNAME,
-				requestEntity,
-				ForgotUsernameApiResponseDTO.class
+				apiRequest,
+				ForgotUsernameApiResponseDto.class
 			);
 
 			// TODO: Set flash message success
 
-			System.out.println("Received status: " + response.getBody().getStatus());
-			System.out.println("Received message: " + response.getBody().getMessage());
+			System.out.println("Received status: " + apiResponse.getBody().getStatus());
+			System.out.println("Received message: " + apiResponse.getBody().getMessage());
 
 		} catch (BadRequest exception) {
 			System.out.println("Exception: @@" + exception.getResponseBodyAsString() + "@@");
@@ -139,22 +139,22 @@ public class SecurityController {
 			return SecurityResources.Views.FORGOT_PASSWORD_FORM;
 		}
 
-		ForgotPasswordApiRequestDto apiRequest = new ForgotPasswordApiRequestDto(
+		ForgotPasswordApiRequestDto forgotPasswordApiRequest = new ForgotPasswordApiRequestDto(
 			form.getUsername()
 		);
-		HttpEntity<ForgotPasswordApiRequestDto> requestEntity = apiRequestFactory
-			.requestEntity(apiRequest);
+		HttpEntity<ForgotPasswordApiRequestDto> apiRequest = apiRequestFactory
+			.requestEntity(forgotPasswordApiRequest);
 		try {
-			ResponseEntity<ForgotPasswordApiResponseDto> response = restTemplate.postForEntity(
+			ResponseEntity<ForgotPasswordApiResponseDto> apiResponse = restTemplate.postForEntity(
 				SecurityResources.Paths.Api.FORGOT_PASSWORD,
-				requestEntity,
+				apiRequest,
 				ForgotPasswordApiResponseDto.class
 			);
 
 			// TODO: Set flash message success
 
-			System.out.println("Received status: " + response.getBody().getStatus());
-			System.out.println("Received message: " + response.getBody().getMessage());
+			System.out.println("Received status: " + apiResponse.getBody().getStatus());
+			System.out.println("Received message: " + apiResponse.getBody().getMessage());
 
 		} catch (BadRequest exception) {
 			System.out.println("Exception: @@" + exception.getResponseBodyAsString() + "@@");
@@ -186,22 +186,22 @@ public class SecurityController {
 			return SecurityResources.Views.PASSWORD_RESET_FORM;
 		}
 
-		PasswordResetApiRequestDto apiRequest = new PasswordResetApiRequestDto(
+		PasswordResetApiRequestDto passwordRestApiRequest = new PasswordResetApiRequestDto(
 			form.getToken(),
 			form.getNewPassword()
 		);
-		HttpEntity<PasswordResetApiRequestDto> requestEntity = apiRequestFactory
-			.requestEntity(apiRequest);
+		HttpEntity<PasswordResetApiRequestDto> apiRequest = apiRequestFactory
+			.requestEntity(passwordRestApiRequest);
 		try {
-			ResponseEntity<PasswordResetApiResponseDto> response = restTemplate.postForEntity(
+			ResponseEntity<PasswordResetApiResponseDto> apiResponse = restTemplate.postForEntity(
 				SecurityResources.Paths.Api.PASSWORD_RESET,
-				requestEntity,
+				apiRequest,
 				PasswordResetApiResponseDto.class
 			);
 
 			// TODO: Set flash message success
 
-			System.out.println("Received status: " + response.getBody().getStatus());
+			System.out.println("Received status: " + apiResponse.getBody().getStatus());
 
 		} catch (BadRequest exception) {
 			System.out.println("Exception: @@" + exception.getResponseBodyAsString() + "@@");

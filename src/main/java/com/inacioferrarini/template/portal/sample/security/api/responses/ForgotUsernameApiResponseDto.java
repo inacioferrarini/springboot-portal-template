@@ -2,12 +2,12 @@ package com.inacioferrarini.template.portal.sample.security.api.responses;
 
 import com.inacioferrarini.template.portal.sample.security.api.enums.ForgotUsernameStatusType;
 
-public class ForgotUsernameApiResponseDTO {
+public class ForgotUsernameApiResponseDto {
 
 	private final ForgotUsernameStatusType status;
 	private final String message;
 
-	public ForgotUsernameApiResponseDTO(
+	public ForgotUsernameApiResponseDto(
 		ForgotUsernameStatusType status,
 		String message
 	) {

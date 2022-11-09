@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
 import com.inacioferrarini.template.portal.sample.security.api.requests.ApiRequestDto;
-import com.inacioferrarini.template.portal.sample.security.dto.JWTTokenDTO;
+import com.inacioferrarini.template.portal.sample.security.dto.JWTTokenDto;
 
 @Component
 public class ApiRequestFactoryImpl implements ApiRequestFactory {
@@ -21,9 +21,9 @@ public class ApiRequestFactoryImpl implements ApiRequestFactory {
 		return headers;
 	}
 
-	private HttpHeaders getHeaders(JWTTokenDTO tokenDTO) {
+	private HttpHeaders getHeaders(JWTTokenDto token) {
 		HttpHeaders headers = getHeaders();
-		headers.setBearerAuth(tokenDTO.getToken());
+		headers.setBearerAuth(token.getToken());
 		return headers;
 	}
 

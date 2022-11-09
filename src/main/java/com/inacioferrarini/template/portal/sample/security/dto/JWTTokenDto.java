@@ -1,6 +1,6 @@
 package com.inacioferrarini.template.portal.sample.security.dto;
 
-public class JWTTokenDTO {
+public class JWTTokenDto {
 
 	public enum TokenType {
 		BEARER
@@ -9,7 +9,7 @@ public class JWTTokenDTO {
 	private final String token;
 	private final TokenType type;
 
-	public JWTTokenDTO(
+	public JWTTokenDto(
 		String token,
 		TokenType type
 	) {

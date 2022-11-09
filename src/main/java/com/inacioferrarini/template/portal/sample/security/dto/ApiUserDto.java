@@ -1,13 +1,13 @@
 package com.inacioferrarini.template.portal.sample.security.dto;
 
-public class ApiUserDTO {
+public class ApiUserDto {
 
 	private final String username;
-	private final JWTTokenDTO token;
+	private final JWTTokenDto token;
 
-	public ApiUserDTO(
+	public ApiUserDto(
 		String username,
-		JWTTokenDTO token
+		JWTTokenDto token
 	) {
 		this.username = username;
 		this.token = token;
@@ -17,7 +17,7 @@ public class ApiUserDTO {
 		return username;
 	}
 
-	public JWTTokenDTO getToken() {
+	public JWTTokenDto getToken() {
 		return token;
 	}
 
