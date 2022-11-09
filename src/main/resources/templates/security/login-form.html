@@ -8,7 +8,10 @@
 	<div class="container">
 		<div th:replace="~{common/base :: titulo(#{'security.login.title'})}"></div>
 		<div class="card mb-3">
-			<form th:action="@{/security/login}" class="card-body" method="post">
+			<form th:action="@{/security/login}" class="card-body" method="post">			
+<h1 th:if="${successMessage}">
+    <p th:text="${'Success Message - '+ successMessage}"/>
+</h1>			
 				<div class="form-group">
 					<label for="username">
 						<span th:text="#{field.username}"/></span>

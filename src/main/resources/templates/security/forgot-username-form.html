@@ -8,7 +8,7 @@
 	<div class="container">
 		<div th:replace="~{common/base :: titulo(#{'security.forgotUsername.title'})}"></div>
 		<div class="card mb-3">
-			<form th:action="@{/security/forgotUsername}" th:object="${forgotUsernameRequestDTO}" class="card-body" method="post">
+			<form th:action="@{/security/forgotUsername}" th:object="${forgotUsernameForm}" class="card-body" method="post">
 				<div class="form-group">
 					<label for="email">
 						<span th:text="#{field.email}"/></span>

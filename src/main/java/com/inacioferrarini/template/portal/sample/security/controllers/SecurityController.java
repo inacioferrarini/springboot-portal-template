@@ -1,5 +1,8 @@
 package com.inacioferrarini.template.portal.sample.security.controllers;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.view.RedirectView;
 
 import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
 import com.inacioferrarini.template.portal.sample.security.api.requests.ActivateUserAccountApiRequestDto;
@@ -43,15 +49,24 @@ public class SecurityController {
 	private ApiRequestFactory apiRequestFactory;
 
 	@GetMapping(SecurityResources.Paths.Security.LOGIN)
-	public String showLoginPage() {
+	public String showLoginPage(
+		HttpServletRequest request
+	) {
+		Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+		if (inputFlashMap != null) {
+			String successMessage = (String) inputFlashMap.get("successMessage");
+			System.out.println("@@ successMessage=" + successMessage);
+		}
+		
 		System.out.println("@@DEBUG: showLoginPage()@@");
+		
 		return SecurityResources.Views.LOGIN_FORM;
 	}
 
 	@GetMapping(SecurityResources.Paths.Security.ACTIVATE_ACCOUNT)
-	public String activateAccount(
+	public ModelAndView activateAccount(
 		@RequestParam(name = TOKEN_KEY) String token,
-		ModelAndView modelAndView
+		RedirectAttributes redirectAttributes
 	) {
 		ActivateUserAccountApiRequestDto activateAccountRequest = new ActivateUserAccountApiRequestDto(
 			token
@@ -65,17 +80,19 @@ public class SecurityController {
 				ActivateUserAccountApiResponseDto.class
 			);
 
-			// TODO: Set flash message success
+// TODO: Set flash message success
+redirectAttributes.addFlashAttribute(
+	"successMessage",
+	"Activate Account - Success"
+);			
 
 			System.out.println("Received status: " + apiResponse.getBody().getStatus());
 		} catch (BadRequest exception) {
-			// TODO: Convert Error to DTO
 			System.out.println("@@" + exception.getResponseBodyAsString() + "@@");
-			// TODO: return error page redirection
+			// Error? Set a Proper Message using flashAttribute
 		}
 
-		// TODO: Redirect to login
-		return SecurityResources.Views.LOGIN_FORM;
+		return new ModelAndView(new RedirectView(SecurityResources.Paths.Configuration.LOGIN_PAGE, true));
 	}
 
 	@GetMapping(SecurityResources.Paths.Security.FORGOT_USERNAME)
@@ -87,12 +104,14 @@ public class SecurityController {
 	}
 
 	@PostMapping(SecurityResources.Paths.Security.FORGOT_USERNAME)
-	public String sendForgotUsername(
+	public ModelAndView sendForgotUsername(
 		@Valid ForgotUsernameForm form,
-		BindingResult result
+		BindingResult result,
+		RedirectAttributes redirectAttributes,
+		HttpServletRequest request
 	) {
 		if (result.hasErrors()) {
-			return SecurityResources.Views.FORGOT_USERNAME_FORM;
+			return new ModelAndView(SecurityResources.Views.FORGOT_USERNAME_FORM);
 		}
 
 		ForgotUsernameApiRequestDto forgotUsernameApiRequest = new ForgotUsernameApiRequestDto(
@@ -107,19 +126,22 @@ public class SecurityController {
 				ForgotUsernameApiResponseDto.class
 			);
 
-			// TODO: Set flash message success
+// TODO: Set flash message success
+redirectAttributes.addFlashAttribute(
+	"successMessage",
+	"Forgot username - email sent"
+);
 
 			System.out.println("Received status: " + apiResponse.getBody().getStatus());
 			System.out.println("Received message: " + apiResponse.getBody().getMessage());
 
 		} catch (BadRequest exception) {
 			System.out.println("Exception: @@" + exception.getResponseBodyAsString() + "@@");
-			// Error? Success? Redirect to Error
-			return SecurityResources.Views.FORGOT_USERNAME_FORM;
+			// Error? Set a Proper Message using flashAttribute
+			return new ModelAndView(SecurityResources.Views.FORGOT_USERNAME_FORM);
 		}
 
-		// TODO: Redirect to login
-		return SecurityResources.Views.FORGOT_USERNAME_FORM;
+		return new ModelAndView(new RedirectView(SecurityResources.Paths.Configuration.LOGIN_PAGE, true));
 	}
 
 	@GetMapping(SecurityResources.Paths.Security.FORGOT_PASSWORD)
@@ -131,12 +153,13 @@ public class SecurityController {
 	}
 
 	@PostMapping(SecurityResources.Paths.Security.FORGOT_PASSWORD)
-	public String sendForgotPassword(
+	public ModelAndView sendForgotPassword(
 		@Valid ForgotPasswordForm form,
-		BindingResult result
+		BindingResult result,
+		RedirectAttributes redirectAttributes
 	) {
 		if (result.hasErrors()) {
-			return SecurityResources.Views.FORGOT_PASSWORD_FORM;
+			return new ModelAndView(SecurityResources.Views.FORGOT_PASSWORD_FORM);
 		}
 
 		ForgotPasswordApiRequestDto forgotPasswordApiRequest = new ForgotPasswordApiRequestDto(
@@ -151,19 +174,22 @@ public class SecurityController {
 				ForgotPasswordApiResponseDto.class
 			);
 
-			// TODO: Set flash message success
+// TODO: Set flash message success
+redirectAttributes.addFlashAttribute(
+	"successMessage",
+	"Forgot password - email sent"
+);
 
 			System.out.println("Received status: " + apiResponse.getBody().getStatus());
 			System.out.println("Received message: " + apiResponse.getBody().getMessage());
 
 		} catch (BadRequest exception) {
 			System.out.println("Exception: @@" + exception.getResponseBodyAsString() + "@@");
-			// Error? Success? Redirect to Error
-			return SecurityResources.Views.FORGOT_PASSWORD_FORM;
+			// Error? Set a Proper Message using flashAttribute
+			return new ModelAndView(SecurityResources.Views.FORGOT_PASSWORD_FORM);
 		}
 
-		// TODO: Redirect to login
-		return SecurityResources.Views.FORGOT_PASSWORD_FORM;
+		return new ModelAndView(new RedirectView(SecurityResources.Paths.Configuration.LOGIN_PAGE, true));
 	}
 
 	@GetMapping(SecurityResources.Paths.Security.PASSWORD_RESET)
@@ -178,12 +204,13 @@ public class SecurityController {
 	}
 
 	@PostMapping(SecurityResources.Paths.Security.PASSWORD_RESET)
-	public String sendPasswordReset(
+	public ModelAndView sendPasswordReset(
 		@Valid PasswordResetForm form,
-		BindingResult result
+		BindingResult result,
+		RedirectAttributes redirectAttributes
 	) {
 		if (result.hasErrors()) {
-			return SecurityResources.Views.PASSWORD_RESET_FORM;
+			return new ModelAndView(SecurityResources.Views.PASSWORD_RESET_FORM);
 		}
 
 		PasswordResetApiRequestDto passwordRestApiRequest = new PasswordResetApiRequestDto(
@@ -199,18 +226,21 @@ public class SecurityController {
 				PasswordResetApiResponseDto.class
 			);
 
-			// TODO: Set flash message success
+// TODO: Set flash message success
+redirectAttributes.addFlashAttribute(
+	"successMessage",
+	"Password Reset Success"
+);
 
 			System.out.println("Received status: " + apiResponse.getBody().getStatus());
 
 		} catch (BadRequest exception) {
 			System.out.println("Exception: @@" + exception.getResponseBodyAsString() + "@@");
-			// Error? Success? Redirect to Error
-			return SecurityResources.Views.PASSWORD_RESET_FORM;
+			// Error? Set a Proper Message using flashAttribute
+			return new ModelAndView(SecurityResources.Views.PASSWORD_RESET_FORM);
 		}
 
-		// TODO: Redirect to login
-		return SecurityResources.Views.PASSWORD_RESET_FORM;
+		return new ModelAndView(new RedirectView(SecurityResources.Paths.Configuration.LOGIN_PAGE, true));
 	}
 
 }
