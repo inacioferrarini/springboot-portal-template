@@ -19,11 +19,14 @@ import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequ
 import com.inacioferrarini.template.portal.sample.security.api.requests.ActivateUserAccountApiRequestDTO;
 import com.inacioferrarini.template.portal.sample.security.api.requests.ForgotPasswordApiRequestDto;
 import com.inacioferrarini.template.portal.sample.security.api.requests.ForgotUsernameApiRequestDTO;
+import com.inacioferrarini.template.portal.sample.security.api.requests.PasswordResetApiRequestDto;
 import com.inacioferrarini.template.portal.sample.security.api.responses.ActivateUserAccountApiResponseDTO;
 import com.inacioferrarini.template.portal.sample.security.api.responses.ForgotPasswordApiResponseDto;
 import com.inacioferrarini.template.portal.sample.security.api.responses.ForgotUsernameApiResponseDTO;
+import com.inacioferrarini.template.portal.sample.security.api.responses.PasswordResetApiResponseDto;
 import com.inacioferrarini.template.portal.sample.security.controllers.forms.ForgotPasswordForm;
 import com.inacioferrarini.template.portal.sample.security.controllers.forms.ForgotUsernameRequestDTO;
+import com.inacioferrarini.template.portal.sample.security.controllers.forms.PasswordResetForm;
 import com.inacioferrarini.template.portal.sample.security.resources.SecurityResources;
 
 @Controller
@@ -54,7 +57,7 @@ public class SecurityController {
 			token
 		);
 		HttpEntity<ActivateUserAccountApiRequestDTO> requestEntity = apiRequestFactory
-			.createActivateAccountApiRequestEntity(activateAccountRequestDTO);
+			.requestEntity(activateAccountRequestDTO);
 		try {
 			ResponseEntity<ActivateUserAccountApiResponseDTO> response = restTemplate.postForEntity(
 				SecurityResources.Paths.Api.ACTIVATE_USER,
@@ -63,7 +66,7 @@ public class SecurityController {
 			);
 
 			// TODO: Set flash message success
-			
+
 			System.out.println("Received status: " + response.getBody().getStatus());
 		} catch (BadRequest exception) {
 			// TODO: Convert Error to DTO
@@ -94,19 +97,19 @@ public class SecurityController {
 			forgotUsernameRequestDTO.getEmail()
 		);
 		HttpEntity<ForgotUsernameApiRequestDTO> requestEntity = apiRequestFactory
-			.createForgotUsernameApiRequestEntity(forgotUsernameApiRequestDTO);
+			.requestEntity(forgotUsernameApiRequestDTO);
 		try {
 			ResponseEntity<ForgotUsernameApiResponseDTO> response = restTemplate.postForEntity(
 				SecurityResources.Paths.Api.FORGOT_USERNAME,
 				requestEntity,
 				ForgotUsernameApiResponseDTO.class
 			);
-			
+
 			// TODO: Set flash message success
 
 			System.out.println("Received status: " + response.getBody().getStatus());
 			System.out.println("Received message: " + response.getBody().getMessage());
-			
+
 		} catch (BadRequest exception) {
 			System.out.println("Exception: @@" + exception.getResponseBodyAsString() + "@@");
 			// Error? Success? Redirect to Error
@@ -132,14 +135,11 @@ public class SecurityController {
 			return SecurityResources.Views.FORGOT_PASSWORD_FORM;
 		}
 
-		System.out.println("@@ send forgot password @@");
-
 		ForgotPasswordApiRequestDto apiRequest = new ForgotPasswordApiRequestDto(
 			forgotPasswordForm.getUsername()
 		);
 		HttpEntity<ForgotPasswordApiRequestDto> requestEntity = apiRequestFactory
-			.createForgotPasswordApiRequestEntity(apiRequest);
-
+			.requestEntity(apiRequest);
 		try {
 			ResponseEntity<ForgotPasswordApiResponseDto> response = restTemplate.postForEntity(
 				SecurityResources.Paths.Api.FORGOT_PASSWORD,
@@ -148,7 +148,7 @@ public class SecurityController {
 			);
 
 			// TODO: Set flash message success
-			
+
 			System.out.println("Received status: " + response.getBody().getStatus());
 			System.out.println("Received message: " + response.getBody().getMessage());
 
@@ -160,6 +160,53 @@ public class SecurityController {
 
 		// TODO: Redirect to login
 		return SecurityResources.Views.FORGOT_PASSWORD_FORM;
+	}
+
+	@GetMapping(SecurityResources.Paths.Security.PASSWORD_RESET)
+	public String showPasswordResetPage(
+		@RequestParam(name = TOKEN_KEY) String token,
+		PasswordResetForm passwordResetForm,
+		ModelAndView modelAndView
+	) {
+		passwordResetForm.setNewPassword("");
+		passwordResetForm.setToken(token);
+		return SecurityResources.Views.PASSWORD_RESET_FORM;
+	}
+
+	@PostMapping(SecurityResources.Paths.Security.PASSWORD_RESET)
+	public String sendPasswordReset(
+		@Valid PasswordResetForm passwordResetForm,
+		BindingResult result
+	) {
+		if (result.hasErrors()) {
+			return SecurityResources.Views.PASSWORD_RESET_FORM;
+		}
+
+		PasswordResetApiRequestDto apiRequest = new PasswordResetApiRequestDto(
+			passwordResetForm.getToken(),
+			passwordResetForm.getNewPassword()
+		);
+		HttpEntity<PasswordResetApiRequestDto> requestEntity = apiRequestFactory
+			.requestEntity(apiRequest);
+		try {
+			ResponseEntity<PasswordResetApiResponseDto> response = restTemplate.postForEntity(
+				SecurityResources.Paths.Api.PASSWORD_RESET,
+				requestEntity,
+				PasswordResetApiResponseDto.class
+			);
+
+			// TODO: Set flash message success
+
+			System.out.println("Received status: " + response.getBody().getStatus());
+			
+		} catch (BadRequest exception) {
+			System.out.println("Exception: @@" + exception.getResponseBodyAsString() + "@@");
+			// Error? Success? Redirect to Error
+			return SecurityResources.Views.PASSWORD_RESET_FORM;
+		}
+
+		// TODO: Redirect to login
+		return SecurityResources.Views.PASSWORD_RESET_FORM;
 	}
 
 }

@@ -4,7 +4,7 @@ import javax.validation.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ActivateUserAccountApiRequestDTO {
+public class ActivateUserAccountApiRequestDTO implements ApiRequestDto {
 
 	@NotEmpty
 	private final String token;

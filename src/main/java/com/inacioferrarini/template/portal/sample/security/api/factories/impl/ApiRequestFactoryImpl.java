@@ -8,10 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
-import com.inacioferrarini.template.portal.sample.security.api.requests.ActivateUserAccountApiRequestDTO;
-import com.inacioferrarini.template.portal.sample.security.api.requests.AuthenticateApiRequestDTO;
-import com.inacioferrarini.template.portal.sample.security.api.requests.ForgotPasswordApiRequestDto;
-import com.inacioferrarini.template.portal.sample.security.api.requests.ForgotUsernameApiRequestDTO;
+import com.inacioferrarini.template.portal.sample.security.api.requests.ApiRequestDto;
 import com.inacioferrarini.template.portal.sample.security.dto.JWTTokenDTO;
 
 @Component
@@ -31,43 +28,10 @@ public class ApiRequestFactoryImpl implements ApiRequestFactory {
 	}
 
 	@Override
-	public
-		HttpEntity<AuthenticateApiRequestDTO>
-		createAuthenticationApiRequestEntity(AuthenticateApiRequestDTO authenticateApiRequestDTO) {
+	public <T extends ApiRequestDto> HttpEntity<T> requestEntity(T request) {
 		HttpHeaders headers = getHeaders();
-		HttpEntity<AuthenticateApiRequestDTO> requestEntity = new HttpEntity<>(authenticateApiRequestDTO, headers);
-		return requestEntity;
-	}
-
-	@Override
-	public
-		HttpEntity<ActivateUserAccountApiRequestDTO>
-		createActivateAccountApiRequestEntity(ActivateUserAccountApiRequestDTO activateAccountApiRequestDTO) {
-		HttpHeaders headers = getHeaders();
-		HttpEntity<ActivateUserAccountApiRequestDTO> requestEntity = new HttpEntity<>(
-			activateAccountApiRequestDTO, headers
-		);
-		return requestEntity;
-	}
-
-	@Override
-	public
-		HttpEntity<ForgotUsernameApiRequestDTO>
-		createForgotUsernameApiRequestEntity(ForgotUsernameApiRequestDTO forgotUsernameApiRequestDTO) {
-		HttpHeaders headers = getHeaders();
-		HttpEntity<ForgotUsernameApiRequestDTO> requestEntity = new HttpEntity<>(
-			forgotUsernameApiRequestDTO, headers
-		);
-		return requestEntity;
-	}
-
-	@Override
-	public
-		HttpEntity<ForgotPasswordApiRequestDto>
-		createForgotPasswordApiRequestEntity(ForgotPasswordApiRequestDto forgotPasswordApiRequestDto) {
-		HttpHeaders headers = getHeaders();
-		HttpEntity<ForgotPasswordApiRequestDto> requestEntity = new HttpEntity<>(
-			forgotPasswordApiRequestDto, headers
+		HttpEntity<T> requestEntity = new HttpEntity<>(
+			request, headers
 		);
 		return requestEntity;
 	}

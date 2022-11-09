@@ -4,7 +4,7 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
-public class AuthenticateApiRequestDTO {
+public class AuthenticateApiRequestDTO implements ApiRequestDto {
 
 	@NotEmpty
 	@Length(min = 8, max = 25)

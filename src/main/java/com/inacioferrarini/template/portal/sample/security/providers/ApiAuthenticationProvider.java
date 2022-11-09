@@ -35,12 +35,9 @@ public class ApiAuthenticationProvider implements AuthenticationProvider {
 			authentication.getName(),
 			authentication.getCredentials().toString()
 		);
-		//
-		// TODO: Execute validation on authenticateRequestDTO
-		// If field errors, throw an exception so it can be catch and directed to the Login Form.
-		//
+
 		HttpEntity<AuthenticateApiRequestDTO> requestEntity = apiRequestFactory
-			.createAuthenticationApiRequestEntity(authenticateRequestDTO);
+			.requestEntity(authenticateRequestDTO);
 		try {
 			ResponseEntity<JWTTokenDTO> tokenResponse = restTemplate.postForEntity(
 				SecurityResources.Paths.Api.AUTHENTICATE,
@@ -52,7 +49,8 @@ public class ApiAuthenticationProvider implements AuthenticationProvider {
 
 			return new UsernamePasswordAuthenticationToken(apiUserDTO, null, new ArrayList<>());
 		} catch (BadRequest exception) {
-			// Throw and Exception and throw it, so it can be catch and redirected to login form
+			// Throw and Exception and throw it, so it can be catch and redirected to login
+			// form
 			System.out.println("@@" + exception.getResponseBodyAsString() + "@@");
 			return null;
 		}

@@ -12,6 +12,7 @@ public class SecurityResources {
 			public static final String AUTHENTICATE = "/auth";
 			public static final String FORGOT_USERNAME = "/user/forgotUsername";
 			public static final String FORGOT_PASSWORD = "/user/forgotPassword";
+			public static final String PASSWORD_RESET = "/user/passwordReset";
 
 		}
 
@@ -22,6 +23,7 @@ public class SecurityResources {
 			public static final String ACTIVATE_ACCOUNT = "/activateAccount";
 			public static final String FORGOT_PASSWORD = "/forgotPassword";
 			public static final String FORGOT_USERNAME = "/forgotUsername";
+			public static final String PASSWORD_RESET = "/passwordReset";
 			public static final String LOGOUT = "/logout";
 
 		}
@@ -41,9 +43,11 @@ public class SecurityResources {
 			public static final String ACTIVATE_ACCOUNT = SecurityResources.Paths.Security.ROOT
 				.concat(SecurityResources.Paths.Security.ACTIVATE_ACCOUNT);
 			public static final String FORGOT_PASSWORD = SecurityResources.Paths.Security.ROOT
-				.concat(SecurityResources.Paths.Security.FORGOT_PASSWORD);			
+				.concat(SecurityResources.Paths.Security.FORGOT_PASSWORD);
 			public static final String FORGOT_USERNAME = SecurityResources.Paths.Security.ROOT
 				.concat(SecurityResources.Paths.Security.FORGOT_USERNAME);
+			public static final String PASSWORD_RESET = SecurityResources.Paths.Security.ROOT
+				.concat(SecurityResources.Paths.Security.PASSWORD_RESET);
 
 		}
 
@@ -55,6 +59,7 @@ public class SecurityResources {
 		public static final String ACTIVATE_ACCOUNT_SUCCESS = "security/activate-account-success";
 		public static final String FORGOT_PASSWORD_FORM = "security/forgot-password-form";
 		public static final String FORGOT_USERNAME_FORM = "security/forgot-username-form";
+		public static final String PASSWORD_RESET_FORM = "security/password-reset-form";
 
 	}
 
