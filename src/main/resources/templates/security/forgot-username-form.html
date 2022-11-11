@@ -2,11 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns="http://www.w3.org/1999/xhtml">
 <meta charset="UTF-8" />
-<head th:replace="~{common/base :: header}"></head>
+<head th:replace="~{common/header :: header}"></head>
 <body>
-	<div th:replace="~{common/base :: logo}"></div>
+	<div th:replace="~{common/logo :: logo}"></div>
 	<div class="container">
-		<div th:replace="~{common/base :: titulo(#{'security.forgotUsername.title'})}"></div>
+		<div th:replace="~{common/title :: title(#{'security.forgotUsername.title'})}"></div>
 		<div class="card mb-3">
 			<form th:action="@{/security/forgotUsername}" th:object="${forgotUsernameForm}" class="card-body" method="post">
 				<div class="form-group">

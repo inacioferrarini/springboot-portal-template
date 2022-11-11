@@ -2,16 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns="http://www.w3.org/1999/xhtml">
 <meta charset="UTF-8" />
-<head th:replace="~{common/base :: header}"></head>
+<head th:replace="~{common/header :: header}"></head>
 <body>
-	<div th:replace="~{common/base :: logo}"></div>
+	<div th:replace="~{common/logo :: logo}"></div>
 	<div class="container">
-		<div th:replace="~{common/base :: titulo(#{'security.login.title'})}"></div>
+		<div th:replace="~{common/title :: title(#{'security.login.title'})}"></div>
 		<div class="card mb-3">
-			<form th:action="@{/security/login}" class="card-body" method="post">			
-<h1 th:if="${successMessage}">
-    <p th:text="${'Success Message - '+ successMessage}"/>
-</h1>			
+			<div th:replace="~{common/messages :: global-message}"></div>
+			<form th:action="@{/security/login}" class="card-body" method="post">
 				<div class="form-group">
 					<label for="username">
 						<span th:text="#{field.username}"/></span>

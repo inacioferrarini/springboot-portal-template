@@ -1,7 +1,5 @@
 package com.inacioferrarini.template.portal.sample.security.controllers;
 
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -18,9 +16,9 @@ import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.inacioferrarini.template.portal.sample.core.messages.GlobalMessageHelper;
 import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
 import com.inacioferrarini.template.portal.sample.security.api.requests.ActivateUserAccountApiRequestDto;
 import com.inacioferrarini.template.portal.sample.security.api.requests.ForgotPasswordApiRequestDto;
@@ -52,14 +50,13 @@ public class SecurityController {
 	public String showLoginPage(
 		HttpServletRequest request
 	) {
-		Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
-		if (inputFlashMap != null) {
-			String successMessage = (String) inputFlashMap.get("successMessage");
-			System.out.println("@@ successMessage=" + successMessage);
-		}
-		
+		GlobalMessageHelper.getGlobalMessage(request).ifPresent(message -> {
+			System.out.println("@@ message=" + message.getMessage());
+			System.out.println("@@ type=" + message.getType());
+		});
+
 		System.out.println("@@DEBUG: showLoginPage()@@");
-		
+
 		return SecurityResources.Views.LOGIN_FORM;
 	}
 
@@ -80,16 +77,17 @@ public class SecurityController {
 				ActivateUserAccountApiResponseDto.class
 			);
 
-// TODO: Set flash message success
-redirectAttributes.addFlashAttribute(
-	"successMessage",
-	"Activate Account - Success"
-);			
-
+			GlobalMessageHelper.setGlobalSuccessMessage(
+				"Activate Account - Success",
+				redirectAttributes
+			);
+			
 			System.out.println("Received status: " + apiResponse.getBody().getStatus());
 		} catch (BadRequest exception) {
-			System.out.println("@@" + exception.getResponseBodyAsString() + "@@");
-			// Error? Set a Proper Message using flashAttribute
+			GlobalMessageHelper.setGlobalErrorMessage(
+				exception.getResponseBodyAsString(),
+				redirectAttributes
+			);
 		}
 
 		return new ModelAndView(new RedirectView(SecurityResources.Paths.Configuration.LOGIN_PAGE, true));
@@ -126,18 +124,18 @@ redirectAttributes.addFlashAttribute(
 				ForgotUsernameApiResponseDto.class
 			);
 
-// TODO: Set flash message success
-redirectAttributes.addFlashAttribute(
-	"successMessage",
-	"Forgot username - email sent"
-);
-
+			GlobalMessageHelper.setGlobalSuccessMessage(
+				"Forgot username - email sent",
+				redirectAttributes
+			);
+			
 			System.out.println("Received status: " + apiResponse.getBody().getStatus());
 			System.out.println("Received message: " + apiResponse.getBody().getMessage());
-
 		} catch (BadRequest exception) {
-			System.out.println("Exception: @@" + exception.getResponseBodyAsString() + "@@");
-			// Error? Set a Proper Message using flashAttribute
+			GlobalMessageHelper.setGlobalErrorMessage(
+				exception.getResponseBodyAsString(),
+				redirectAttributes
+			);
 			return new ModelAndView(SecurityResources.Views.FORGOT_USERNAME_FORM);
 		}
 
@@ -174,18 +172,18 @@ redirectAttributes.addFlashAttribute(
 				ForgotPasswordApiResponseDto.class
 			);
 
-// TODO: Set flash message success
-redirectAttributes.addFlashAttribute(
-	"successMessage",
-	"Forgot password - email sent"
-);
-
+			GlobalMessageHelper.setGlobalSuccessMessage(
+				"Forgot password - email sent",
+				redirectAttributes
+			);
+			
 			System.out.println("Received status: " + apiResponse.getBody().getStatus());
 			System.out.println("Received message: " + apiResponse.getBody().getMessage());
-
 		} catch (BadRequest exception) {
-			System.out.println("Exception: @@" + exception.getResponseBodyAsString() + "@@");
-			// Error? Set a Proper Message using flashAttribute
+			GlobalMessageHelper.setGlobalErrorMessage(
+				exception.getResponseBodyAsString(),
+				redirectAttributes
+			);
 			return new ModelAndView(SecurityResources.Views.FORGOT_PASSWORD_FORM);
 		}
 
@@ -226,17 +224,17 @@ redirectAttributes.addFlashAttribute(
 				PasswordResetApiResponseDto.class
 			);
 
-// TODO: Set flash message success
-redirectAttributes.addFlashAttribute(
-	"successMessage",
-	"Password Reset Success"
-);
+			GlobalMessageHelper.setGlobalSuccessMessage(
+				"Password Reset Success",
+				redirectAttributes
+			);
 
 			System.out.println("Received status: " + apiResponse.getBody().getStatus());
-
 		} catch (BadRequest exception) {
-			System.out.println("Exception: @@" + exception.getResponseBodyAsString() + "@@");
-			// Error? Set a Proper Message using flashAttribute
+			GlobalMessageHelper.setGlobalErrorMessage(
+				exception.getResponseBodyAsString(),
+				redirectAttributes
+			);
 			return new ModelAndView(SecurityResources.Views.PASSWORD_RESET_FORM);
 		}
 
