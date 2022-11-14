@@ -4,9 +4,13 @@ import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.servlet.FlashMap;
+import org.springframework.web.servlet.FlashMapManager;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.support.SessionFlashMapManager;
 
 public class GlobalMessageHelper {
 
@@ -54,6 +58,46 @@ public class GlobalMessageHelper {
 			GlobalMessageDto.Type.ERROR
 		);
 		setGlobalMessage(globalMessage, redirectAttributes);
+	}
+
+	public static void setGlobalMessage(
+		final GlobalMessageDto globalMessage,
+		final HttpServletRequest request,
+		final HttpServletResponse response
+	) {
+		final FlashMap flashMap = new FlashMap();
+		final FlashMapManager flashMapManager = new SessionFlashMapManager();
+
+		flashMap.put(
+			MessageConstants.GLOBAL_MESSAGE_KEY,
+			globalMessage
+		);
+
+		flashMapManager.saveOutputFlashMap(flashMap, request, response);
+	}
+
+	public static void setGlobalSuccessMessage(
+		final String message,
+		final HttpServletRequest request,
+		final HttpServletResponse response
+	) {
+		final GlobalMessageDto globalMessage = new GlobalMessageDto(
+			message,
+			GlobalMessageDto.Type.SUCCESS
+		);
+		setGlobalMessage(globalMessage, request, response);
+	}
+
+	public static void setGlobalErrorMessage(
+		final String message,
+		final HttpServletRequest request,
+		final HttpServletResponse response
+	) {
+		final GlobalMessageDto globalMessage = new GlobalMessageDto(
+			message,
+			GlobalMessageDto.Type.ERROR
+		);
+		setGlobalMessage(globalMessage, request, response);
 	}
 
 }

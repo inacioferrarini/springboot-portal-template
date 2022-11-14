@@ -9,7 +9,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
+import com.inacioferrarini.template.portal.sample.security.handlers.ApiAuthenticationFailureHandler;
 import com.inacioferrarini.template.portal.sample.security.providers.ApiAuthenticationProvider;
 import com.inacioferrarini.template.portal.sample.security.resources.SecurityResources;
 
@@ -44,6 +46,7 @@ public class SecurityConfigurations {
 					.loginPage(SecurityResources.Paths.Configuration.LOGIN_PAGE)
 					.loginProcessingUrl(SecurityResources.Paths.Configuration.LOGIN_PROCESS)
 					.defaultSuccessUrl(SecurityResources.Paths.Configuration.LOGIN_SUCCESS, true)
+					.failureHandler(authenticationFailureHandler())
 					.permitAll()
 			)
 			.logout(logout -> {
@@ -54,6 +57,11 @@ public class SecurityConfigurations {
 			.csrf().disable();
 
 		return http.build();
+	}
+
+	@Bean
+	public AuthenticationFailureHandler authenticationFailureHandler() {
+		return new ApiAuthenticationFailureHandler();
 	}
 
 }

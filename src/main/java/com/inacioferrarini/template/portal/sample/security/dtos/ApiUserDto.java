@@ -1,4 +1,4 @@
-package com.inacioferrarini.template.portal.sample.security.dto;
+package com.inacioferrarini.template.portal.sample.security.dtos;
 
 public class ApiUserDto {
 

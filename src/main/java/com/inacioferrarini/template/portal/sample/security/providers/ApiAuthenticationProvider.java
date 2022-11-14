@@ -15,8 +15,9 @@ import org.springframework.web.client.RestTemplate;
 
 import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
 import com.inacioferrarini.template.portal.sample.security.api.requests.AuthenticateApiRequestDto;
-import com.inacioferrarini.template.portal.sample.security.dto.ApiUserDto;
-import com.inacioferrarini.template.portal.sample.security.dto.JWTTokenDto;
+import com.inacioferrarini.template.portal.sample.security.dtos.ApiUserDto;
+import com.inacioferrarini.template.portal.sample.security.dtos.JWTTokenDto;
+import com.inacioferrarini.template.portal.sample.security.errors.factories.ApiErrorFactory;
 import com.inacioferrarini.template.portal.sample.security.resources.SecurityResources;
 
 @Component
@@ -27,6 +28,9 @@ public class ApiAuthenticationProvider implements AuthenticationProvider {
 
 	@Autowired
 	private ApiRequestFactory apiRequestFactory;
+
+	@Autowired
+	private ApiErrorFactory apiErrorFactory;
 
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -49,9 +53,13 @@ public class ApiAuthenticationProvider implements AuthenticationProvider {
 
 			return new UsernamePasswordAuthenticationToken(apiUser, null, new ArrayList<>());
 		} catch (BadRequest exception) {
-			// Throw and Exception and throw it, so it can be catch and redirected to login
-			// form
-			System.out.println("@@" + exception.getResponseBodyAsString() + "@@");
+			apiErrorFactory.parseException(exception)
+				.filter(AuthenticationException.class::isInstance)
+				.map(AuthenticationException.class::cast)
+				.ifPresent(apiException -> {
+					throw apiException;
+				});
+			// TODO: Log Error
 			return null;
 		}
 	}

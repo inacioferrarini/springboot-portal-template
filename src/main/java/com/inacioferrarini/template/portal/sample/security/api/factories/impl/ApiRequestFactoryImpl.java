@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
 import com.inacioferrarini.template.portal.sample.security.api.requests.ApiRequestDto;
-import com.inacioferrarini.template.portal.sample.security.dto.JWTTokenDto;
+import com.inacioferrarini.template.portal.sample.security.dtos.JWTTokenDto;
 
 @Component
 public class ApiRequestFactoryImpl implements ApiRequestFactory {
