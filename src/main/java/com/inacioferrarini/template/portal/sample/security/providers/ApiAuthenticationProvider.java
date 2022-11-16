@@ -1,6 +1,8 @@
 package com.inacioferrarini.template.portal.sample.security.providers;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -13,10 +15,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.client.RestTemplate;
 
+import com.inacioferrarini.template.portal.sample.core.api.errors.exceptions.FieldValueLengthInvalidException;
+import com.inacioferrarini.template.portal.sample.core.api.errors.exceptions.RequiredFieldValueEmptyException;
+import com.inacioferrarini.template.portal.sample.core.api.errors.exceptions.WrapperException;
 import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
 import com.inacioferrarini.template.portal.sample.security.api.requests.AuthenticateApiRequestDto;
 import com.inacioferrarini.template.portal.sample.security.dtos.ApiUserDto;
 import com.inacioferrarini.template.portal.sample.security.dtos.JWTTokenDto;
+import com.inacioferrarini.template.portal.sample.security.errors.ApiError;
+import com.inacioferrarini.template.portal.sample.security.errors.exceptions.CompoundSecurityException;
 import com.inacioferrarini.template.portal.sample.security.errors.factories.ApiErrorFactory;
 import com.inacioferrarini.template.portal.sample.security.resources.SecurityResources;
 
@@ -53,13 +60,30 @@ public class ApiAuthenticationProvider implements AuthenticationProvider {
 
 			return new UsernamePasswordAuthenticationToken(apiUser, null, new ArrayList<>());
 		} catch (BadRequest exception) {
+			
+			//
+			//
+			// TODO: Log Error
+			//
+			//
+			
+			apiErrorFactory.parseException(exception)
+				.filter(WrapperException.class::isInstance)
+				.map(WrapperException.class::cast)
+				.ifPresent(apiExceptionWrapper -> {
+					throw new CompoundSecurityException(
+						"CompoundSecurityException",
+						apiExceptionWrapper.getExceptions()
+					);
+				});
+
 			apiErrorFactory.parseException(exception)
 				.filter(AuthenticationException.class::isInstance)
 				.map(AuthenticationException.class::cast)
 				.ifPresent(apiException -> {
 					throw apiException;
 				});
-			// TODO: Log Error
+
 			return null;
 		}
 	}

@@ -11,6 +11,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import com.inacioferrarini.template.portal.sample.core.messages.GlobalMessageHelper;
+import com.inacioferrarini.template.portal.sample.security.errors.exceptions.CompoundSecurityException;
 import com.inacioferrarini.template.portal.sample.security.errors.exceptions.InvalidUserCredentialsException;
 import com.inacioferrarini.template.portal.sample.security.errors.exceptions.UserPendingActivationException;
 import com.inacioferrarini.template.portal.sample.security.resources.SecurityResources;
@@ -24,6 +25,14 @@ public class ApiAuthenticationFailureHandler implements AuthenticationFailureHan
 		final AuthenticationException exception
 	) throws IOException, ServletException {
 		final String loginUrl = getLoginUrl(request);
+
+		Optional.of(exception)
+			.filter(CompoundSecurityException.class::isInstance)
+			.map(CompoundSecurityException.class::cast)
+			.ifPresent(apiException -> {
+				// TODO: Get from bundle
+				GlobalMessageHelper.setGlobalErrorMessage("Invalid Credentials", request, response);
+			});
 
 		Optional.of(exception)
 			.filter(InvalidUserCredentialsException.class::isInstance)
