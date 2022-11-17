@@ -1,6 +1,7 @@
 package com.inacioferrarini.template.portal.sample.security.configurations;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,6 +22,9 @@ public class SecurityConfigurations {
 
 	@Autowired
 	private ApiAuthenticationProvider authenticationProvider;
+
+	@Autowired
+	private MessageSource messageSource;
 
 	@Bean
 	public AuthenticationManager authManager(HttpSecurity http) throws Exception {
@@ -61,7 +65,9 @@ public class SecurityConfigurations {
 
 	@Bean
 	public AuthenticationFailureHandler authenticationFailureHandler() {
-		return new ApiAuthenticationFailureHandler();
+		return new ApiAuthenticationFailureHandler(
+			messageSource
+		);
 	}
 
 }

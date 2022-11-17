@@ -1,10 +1,10 @@
 package com.inacioferrarini.template.portal.sample.security.providers;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -15,14 +15,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.client.RestTemplate;
 
-import com.inacioferrarini.template.portal.sample.core.api.errors.exceptions.FieldValueLengthInvalidException;
-import com.inacioferrarini.template.portal.sample.core.api.errors.exceptions.RequiredFieldValueEmptyException;
 import com.inacioferrarini.template.portal.sample.core.api.errors.exceptions.WrapperException;
 import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
 import com.inacioferrarini.template.portal.sample.security.api.requests.AuthenticateApiRequestDto;
+import com.inacioferrarini.template.portal.sample.security.api.responses.AuthenticateResponseDto;
 import com.inacioferrarini.template.portal.sample.security.dtos.ApiUserDto;
-import com.inacioferrarini.template.portal.sample.security.dtos.JWTTokenDto;
-import com.inacioferrarini.template.portal.sample.security.errors.ApiError;
 import com.inacioferrarini.template.portal.sample.security.errors.exceptions.CompoundSecurityException;
 import com.inacioferrarini.template.portal.sample.security.errors.factories.ApiErrorFactory;
 import com.inacioferrarini.template.portal.sample.security.resources.SecurityResources;
@@ -50,23 +47,31 @@ public class ApiAuthenticationProvider implements AuthenticationProvider {
 		HttpEntity<AuthenticateApiRequestDto> apiRequest = apiRequestFactory
 			.requestEntity(authenticateRequest);
 		try {
-			ResponseEntity<JWTTokenDto> apiResponse = restTemplate.postForEntity(
+			ResponseEntity<AuthenticateResponseDto> apiResponse = restTemplate.postForEntity(
 				SecurityResources.Paths.Api.AUTHENTICATE,
 				apiRequest,
-				JWTTokenDto.class
+				AuthenticateResponseDto.class
 			);
 
-			ApiUserDto apiUser = new ApiUserDto(authentication.getName(), apiResponse.getBody());
+			final Locale userIdiom = Locale.forLanguageTag(apiResponse.getBody().getIdiom());
+
+			ApiUserDto apiUser = new ApiUserDto(
+				authentication.getName(),
+				userIdiom,
+				apiResponse.getBody().getToken()
+			);
+
+			LocaleContextHolder.setLocale(userIdiom);
 
 			return new UsernamePasswordAuthenticationToken(apiUser, null, new ArrayList<>());
 		} catch (BadRequest exception) {
-			
+
 			//
 			//
 			// TODO: Log Error
 			//
 			//
-			
+
 			apiErrorFactory.parseException(exception)
 				.filter(WrapperException.class::isInstance)
 				.map(WrapperException.class::cast)
