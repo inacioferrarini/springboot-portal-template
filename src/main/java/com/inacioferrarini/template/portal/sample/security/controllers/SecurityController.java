@@ -50,6 +50,7 @@ public class SecurityController {
 	public String showLoginPage(
 		HttpServletRequest request
 	) {
+		// TODO: Remove debug message
 		GlobalMessageHelper.getGlobalMessage(request).ifPresent(message -> {
 			System.out.println("@@ message=" + message.getMessage());
 			System.out.println("@@ type=" + message.getType());

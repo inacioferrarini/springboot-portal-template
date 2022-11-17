@@ -65,13 +65,6 @@ public class ApiAuthenticationProvider implements AuthenticationProvider {
 
 			return new UsernamePasswordAuthenticationToken(apiUser, null, new ArrayList<>());
 		} catch (BadRequest exception) {
-
-			//
-			//
-			// TODO: Log Error
-			//
-			//
-
 			apiErrorFactory.parseException(exception)
 				.filter(WrapperException.class::isInstance)
 				.map(WrapperException.class::cast)

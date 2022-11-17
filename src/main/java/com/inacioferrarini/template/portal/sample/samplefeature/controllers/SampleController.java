@@ -15,6 +15,9 @@ public class SampleController {
 
 	@GetMapping(INDEX_MAPPING)
 	public String index() {
+		
+		//
+		
 		return INDEX_VIEW;
 	}
 
