@@ -39,6 +39,8 @@ public class SecurityConfigurations {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
+			.antMatchers(HttpMethod.GET, SecurityResources.ResourceCollections.CSS).permitAll()
+			.antMatchers(HttpMethod.GET, SecurityResources.ResourceCollections.JS).permitAll()
 			.antMatchers(HttpMethod.GET, SecurityResources.Paths.Configuration.ACTIVATE_ACCOUNT).permitAll()
 			.antMatchers(SecurityResources.Paths.Configuration.FORGOT_USERNAME).permitAll()
 			.antMatchers(SecurityResources.Paths.Configuration.FORGOT_PASSWORD).permitAll()

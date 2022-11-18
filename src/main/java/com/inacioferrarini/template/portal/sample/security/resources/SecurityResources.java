@@ -16,18 +16,6 @@ public class SecurityResources {
 
 		}
 
-		public static class Security {
-
-			public static final String ROOT = "/security";
-			public static final String LOGIN = "/login";
-			public static final String ACTIVATE_ACCOUNT = "/activateAccount";
-			public static final String FORGOT_PASSWORD = "/forgotPassword";
-			public static final String FORGOT_USERNAME = "/forgotUsername";
-			public static final String PASSWORD_RESET = "/passwordReset";
-			public static final String LOGOUT = "/logout";
-
-		}
-
 		public static class Configuration {
 
 			public static final String LOGIN_PAGE = SecurityResources.Paths.Security.ROOT
@@ -51,8 +39,27 @@ public class SecurityResources {
 
 		}
 
+		public static class Security {
+
+			public static final String ROOT = "/security";
+			public static final String LOGIN = "/login";
+			public static final String ACTIVATE_ACCOUNT = "/activateAccount";
+			public static final String FORGOT_PASSWORD = "/forgotPassword";
+			public static final String FORGOT_USERNAME = "/forgotUsername";
+			public static final String PASSWORD_RESET = "/passwordReset";
+			public static final String LOGOUT = "/logout";
+
+		}
+
 	}
 
+	public static class ResourceCollections {
+		
+		public static final String CSS = "/css/**";
+		public static final String JS = "/js/**";
+		
+	}
+	
 	public static class Views {
 
 		public static final String LOGIN_FORM = "security/login-form";

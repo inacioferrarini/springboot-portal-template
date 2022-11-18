@@ -3,19 +3,19 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
 	xmlns="http://www.w3.org/1999/xhtml">
 
-<div th:fragment="global-message" class="">
-	<div th:if="${globalMessage != null && globalMessage.type.name() == 'SUCCESS'}" class="alert alert-success alert-dismissible fade show" role="alert">
-		<span th:text="${globalMessage.message}"/></span>
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		</button>
-	</div>	
-	<div th:if="${globalMessage != null && globalMessage.type.name() == 'ERROR'}" class="alert alert-danger alert-dismissible fade show" role="alert">
-		<span th:text="${globalMessage.message}"/></span>
-		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-			<span aria-hidden="true">&times;</span>
-		</button>
-	</div>
-</div>
+			<div th:fragment="global-message" class="">
+				<div th:if="${globalMessage != null && globalMessage.type.name() == 'SUCCESS'}" class="alert alert-success alert-dismissible fade show" role="alert">
+					<span th:text="${globalMessage.message}"/></span>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>	
+				<div th:if="${globalMessage != null && globalMessage.type.name() == 'ERROR'}" class="alert alert-danger alert-dismissible fade show" role="alert">
+					<span th:text="${globalMessage.message}"/></span>
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			</div>
 
 </html>
