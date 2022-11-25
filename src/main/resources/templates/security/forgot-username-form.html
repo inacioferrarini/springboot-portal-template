@@ -1,23 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 	xmlns="http://www.w3.org/1999/xhtml">
-<meta charset="UTF-8" />
 <head th:replace="~{common/header :: header}"></head>
 <body>
 	<div th:replace="~{common/logo :: logo}"></div>
 	<div class="container">
-		<div th:replace="~{common/title :: title(#{'security.forgotUsername.title'})}"></div>
-		<div class="card mb-3">
+		<div th:replace="~{common/messages :: global-message}"></div>
+		<div class="small-form">
 			<form th:action="@{/security/forgotUsername}" th:object="${forgotUsernameForm}" class="card-body" method="post">
-				<div class="form-group">
-					<label for="email">
-						<span th:text="#{field.email}"/></span>
-					</label>
-					<input th:field="*{email}" th:errorclass="is-invalid" class="form-control" th:placeholder="#{field.email}"/>
-					<small><span th:text="#{forgotUsername.email.description}"></span></small>
+				<h2 th:text="#{security.forgotUsername.title}">Title</h2>
+				<div class="col-12 my-3">
+					<label for="email" class="form-label"><span th:text="#{field.email}"/></span>&nbsp;<span class="requiredField">*</span></label>
+					<input th:field="*{email}" th:errorclass="is-invalid" class="form-control" th:placeholder="#{field.email}" />
+					<small id="emailHelpBlock" class="form-text text-muted"><span th:text="#{forgotUsername.email.description}"></span></small>
 					<div class="invalid-feedback" th:errors="*{email}"></div>
 				</div>
-				<button class="btn btn-primary" type="submit">
+				<button class="btn btn-primary col-12" type="submit">
 					<span th:text="#{action.doLogin}"/></span>
 				</button>
 			</form>

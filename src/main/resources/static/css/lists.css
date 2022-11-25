@@ -1,0 +1,22 @@
+fieldset.searchBox {
+    background-color: #d4d4d4;
+    border: 1px solid darkgray !important;
+}
+
+.toolColumn {
+    width: 1px;
+    white-space: nowrap;
+}
+
+div.toolbar {
+    background-color: #e4e4e4;
+}
+
+thead.tableHeader {
+    border-top: 1px solid darkgray;
+    border-bottom: 2px solid darkgray;
+}
+
+tbody.tableBody {
+    border-bottom: 2px solid darkgray;
+}
