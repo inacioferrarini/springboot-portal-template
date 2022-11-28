@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.client.HttpClientErrorException.Conflict;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
@@ -39,7 +41,10 @@ public class RegisterAccountController {
 
 	@Autowired
 	private ApiRequestFactory apiRequestFactory;
-		
+	
+	@Autowired
+	private LocaleResolver localeResolver;
+	
 	@GetMapping(SecurityResources.Paths.Security.REGISTER_ACCOUNT)
 	public String showRegisterAccountForm(
 		RegisterAccountForm form
@@ -97,12 +102,13 @@ System.out.println("Received message: " + apiResponse.getBody().getMessage());
 	
 	@PostMapping(SecurityResources.Paths.Security.CHANGE_IDIOM)
 	public String changeIdiom(
-		RegisterAccountForm form
+		RegisterAccountForm form,
+		HttpServletRequest request,
+		HttpServletResponse response
 	) {
 		final Locale selectedIdiom = Locale.forLanguageTag(form.getIdiom());		
-		LocaleContextHolder.setLocale(selectedIdiom);
-
 		addSupportedIdioms(form);
+		localeResolver.setLocale(request, response, selectedIdiom);
 		return SecurityResources.Views.REGISTER_ACCOUNT_FORM;
 	}
 	
