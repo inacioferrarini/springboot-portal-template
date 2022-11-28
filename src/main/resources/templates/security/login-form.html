@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-	xmlns="http://www.w3.org/1999/xhtml">
-<head th:replace="~{common/header :: header}"></head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<th:block th:replace = "~{common/header :: header-content}"></th:block>
+<link rel="stylesheet" type="text/css" th:href="@{/css/forms.css}" />
+</head>
+
 <body>
 	<div th:replace="~{common/logo :: logo}"></div>
 	<div class="container">
@@ -22,8 +26,8 @@
 				</button>
 				<!-- Add Remember Me -->
 				<!-- Add Forgot Password -->
-				<!-- Add Create an Account -->				
 			</form>
+			<p class="text-center"><a th:href="@{/security/registerAccount}" href="#"><span th:text="#{action.createAccount}"></span></a></p>
 		</div>
 	</div>
 </body>

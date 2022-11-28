@@ -13,9 +13,11 @@ public class SecurityResources {
 			public static final String FORGOT_USERNAME = "/user/forgotUsername";
 			public static final String FORGOT_PASSWORD = "/user/forgotPassword";
 			public static final String PASSWORD_RESET = "/user/passwordReset";
+			public static final String REGISTER_ACCOUNT = "/user/register";
 
 		}
 
+		// TODO: Rename this. Besides being used for configuration, a better name would be nice.
 		public static class Configuration {
 
 			public static final String LOGIN_PAGE = SecurityResources.Paths.Security.ROOT
@@ -30,12 +32,16 @@ public class SecurityResources {
 				.concat(SecurityResources.Paths.Security.LOGIN);
 			public static final String ACTIVATE_ACCOUNT = SecurityResources.Paths.Security.ROOT
 				.concat(SecurityResources.Paths.Security.ACTIVATE_ACCOUNT);
+			public static final String CHANGE_IDIOM = SecurityResources.Paths.Security.ROOT
+				.concat(SecurityResources.Paths.Security.CHANGE_IDIOM);
 			public static final String FORGOT_PASSWORD = SecurityResources.Paths.Security.ROOT
 				.concat(SecurityResources.Paths.Security.FORGOT_PASSWORD);
 			public static final String FORGOT_USERNAME = SecurityResources.Paths.Security.ROOT
 				.concat(SecurityResources.Paths.Security.FORGOT_USERNAME);
 			public static final String PASSWORD_RESET = SecurityResources.Paths.Security.ROOT
 				.concat(SecurityResources.Paths.Security.PASSWORD_RESET);
+			public static final String REGISTER_ACCOUNT = SecurityResources.Paths.Security.ROOT
+				.concat(SecurityResources.Paths.Security.REGISTER_ACCOUNT);
 
 		}
 
@@ -44,9 +50,11 @@ public class SecurityResources {
 			public static final String ROOT = "/security";
 			public static final String LOGIN = "/login";
 			public static final String ACTIVATE_ACCOUNT = "/activateAccount";
+			public static final String CHANGE_IDIOM = "/registerAccount/changeIdiom";
 			public static final String FORGOT_PASSWORD = "/forgotPassword";
 			public static final String FORGOT_USERNAME = "/forgotUsername";
 			public static final String PASSWORD_RESET = "/passwordReset";
+			public static final String REGISTER_ACCOUNT = "/registerAccount";
 			public static final String LOGOUT = "/logout";
 
 		}
@@ -67,6 +75,7 @@ public class SecurityResources {
 		public static final String FORGOT_PASSWORD_FORM = "security/forgot-password-form";
 		public static final String FORGOT_USERNAME_FORM = "security/forgot-username-form";
 		public static final String PASSWORD_RESET_FORM = "security/password-reset-form";
+		public static final String REGISTER_ACCOUNT_FORM = "security/register-account-form";
 
 	}
 

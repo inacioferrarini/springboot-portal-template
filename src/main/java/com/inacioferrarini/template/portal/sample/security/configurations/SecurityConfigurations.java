@@ -42,9 +42,11 @@ public class SecurityConfigurations {
 			.antMatchers(HttpMethod.GET, SecurityResources.ResourceCollections.CSS).permitAll()
 			.antMatchers(HttpMethod.GET, SecurityResources.ResourceCollections.JS).permitAll()
 			.antMatchers(HttpMethod.GET, SecurityResources.Paths.Configuration.ACTIVATE_ACCOUNT).permitAll()
+			.antMatchers(SecurityResources.Paths.Configuration.CHANGE_IDIOM).permitAll()
 			.antMatchers(SecurityResources.Paths.Configuration.FORGOT_USERNAME).permitAll()
 			.antMatchers(SecurityResources.Paths.Configuration.FORGOT_PASSWORD).permitAll()
 			.antMatchers(SecurityResources.Paths.Configuration.PASSWORD_RESET).permitAll()
+			.antMatchers(SecurityResources.Paths.Configuration.REGISTER_ACCOUNT).permitAll()
 			.anyRequest().authenticated()
 			.and()
 			.formLogin(

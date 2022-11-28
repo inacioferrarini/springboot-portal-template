@@ -3,7 +3,7 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
 	xmlns="http://www.w3.org/1999/xhtml">
 
-			<div th:fragment="global-message" class="">
+			<div th:fragment="global-message" th:if="${globalMessage != null}">
 				<div th:if="${globalMessage != null && globalMessage.type.name() == 'SUCCESS'}" class="alert alert-success alert-dismissible fade show" role="alert">
 					<i class="bi-check-circle-fill"></i>
 					<strong>Success!</strong>&nbsp;<span th:text="${globalMessage.message}"/></span>

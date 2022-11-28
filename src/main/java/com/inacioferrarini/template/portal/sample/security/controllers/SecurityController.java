@@ -50,14 +50,6 @@ public class SecurityController {
 	public String showLoginPage(
 		HttpServletRequest request
 	) {
-		// TODO: Remove debug message
-		GlobalMessageHelper.getGlobalMessage(request).ifPresent(message -> {
-			System.out.println("@@ message=" + message.getMessage());
-			System.out.println("@@ type=" + message.getType());
-		});
-
-		System.out.println("@@DEBUG: showLoginPage()@@");
-
 		return SecurityResources.Views.LOGIN_FORM;
 	}
 
@@ -82,8 +74,6 @@ public class SecurityController {
 				"Activate Account - Success",
 				redirectAttributes
 			);
-			
-			System.out.println("Received status: " + apiResponse.getBody().getStatus());
 		} catch (BadRequest exception) {
 			GlobalMessageHelper.setGlobalErrorMessage(
 				exception.getResponseBodyAsString(),
@@ -129,9 +119,6 @@ public class SecurityController {
 				"Forgot username - email sent",
 				redirectAttributes
 			);
-			
-			System.out.println("Received status: " + apiResponse.getBody().getStatus());
-			System.out.println("Received message: " + apiResponse.getBody().getMessage());
 		} catch (BadRequest exception) {
 			GlobalMessageHelper.setGlobalErrorMessage(
 				exception.getResponseBodyAsString(),
@@ -142,7 +129,7 @@ public class SecurityController {
 
 		return new ModelAndView(new RedirectView(SecurityResources.Paths.Configuration.LOGIN_PAGE, true));
 	}
-
+	
 	@GetMapping(SecurityResources.Paths.Security.FORGOT_PASSWORD)
 	public String showForgotPasswordPage(
 		ForgotPasswordForm form
@@ -177,9 +164,6 @@ public class SecurityController {
 				"Forgot password - email sent",
 				redirectAttributes
 			);
-			
-			System.out.println("Received status: " + apiResponse.getBody().getStatus());
-			System.out.println("Received message: " + apiResponse.getBody().getMessage());
 		} catch (BadRequest exception) {
 			GlobalMessageHelper.setGlobalErrorMessage(
 				exception.getResponseBodyAsString(),
@@ -229,8 +213,6 @@ public class SecurityController {
 				"Password Reset Success",
 				redirectAttributes
 			);
-
-			System.out.println("Received status: " + apiResponse.getBody().getStatus());
 		} catch (BadRequest exception) {
 			GlobalMessageHelper.setGlobalErrorMessage(
 				exception.getResponseBodyAsString(),
