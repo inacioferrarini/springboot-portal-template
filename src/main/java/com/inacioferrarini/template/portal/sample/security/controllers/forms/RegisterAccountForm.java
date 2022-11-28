@@ -38,6 +38,9 @@ public class RegisterAccountForm {
 	@AssertTrue
 	private Boolean agreedToTerms;
 
+	public RegisterAccountForm() {
+	}
+
 	public List<java.util.Locale> getSupportedIdiomList() {
 		return supportedIdiomList;
 	}
