@@ -1,5 +1,6 @@
 package com.inacioferrarini.template.portal.sample.samplefeature.controllers;
 
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,9 +16,7 @@ public class SampleController {
 
 	@GetMapping(INDEX_MAPPING)
 	public String index() {
-		
-		//
-		
+		System.out.println("Locale from user: " + LocaleContextHolder.getLocale());
 		return INDEX_VIEW;
 	}
 

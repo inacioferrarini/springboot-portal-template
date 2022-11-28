@@ -3,8 +3,10 @@ package com.inacioferrarini.template.portal.sample.security.providers;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -14,6 +16,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.LocaleResolver;
 
 import com.inacioferrarini.template.portal.sample.core.api.errors.exceptions.WrapperException;
 import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
@@ -36,8 +39,19 @@ public class ApiAuthenticationProvider implements AuthenticationProvider {
 	@Autowired
 	private ApiErrorFactory apiErrorFactory;
 
+	@Autowired
+	private HttpServletRequest request;
+
+	@Autowired
+	private HttpServletResponse response;
+
+	@Autowired
+	private LocaleResolver localeResolver;
+
 	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+	public Authentication authenticate(
+		Authentication authentication
+	) throws AuthenticationException {
 
 		AuthenticateApiRequestDto authenticateRequest = new AuthenticateApiRequestDto(
 			authentication.getName(),
@@ -61,7 +75,7 @@ public class ApiAuthenticationProvider implements AuthenticationProvider {
 				apiResponse.getBody().getToken()
 			);
 
-			LocaleContextHolder.setLocale(userIdiom);
+			localeResolver.setLocale(request, response, userIdiom);
 
 			return new UsernamePasswordAuthenticationToken(apiUser, null, new ArrayList<>());
 		} catch (BadRequest exception) {
