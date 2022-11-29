@@ -1,6 +1,6 @@
 package com.inacioferrarini.template.portal.sample.security.resources;
 
-import com.inacioferrarini.template.portal.sample.samplefeature.controllers.SampleController;
+import com.inacioferrarini.template.portal.sample.todosamplefeature.resources.TodoFeatureResources;
 
 public class SecurityResources {
 
@@ -24,8 +24,14 @@ public class SecurityResources {
 				.concat(SecurityResources.Paths.Security.LOGIN);
 			public static final String LOGIN_PROCESS = SecurityResources.Paths.Security.ROOT
 				.concat(SecurityResources.Paths.Security.LOGIN);
-			public static final String LOGIN_SUCCESS = SampleController.BASE_MAPPING
-				.concat(SampleController.INDEX_MAPPING);
+//
+//
+// TODO: Create a Dashboard entry point
+public static final String LOGIN_SUCCESS = TodoFeatureResources.Paths.ToDo.ROOT
+				.concat(TodoFeatureResources.Paths.ToDo.INDEX);
+//
+//
+//
 			public static final String LOGOUT = SecurityResources.Paths.Security.ROOT
 				.concat(SecurityResources.Paths.Security.LOGOUT);
 			public static final String LOGOUT_SUCCESS = SecurityResources.Paths.Security.ROOT

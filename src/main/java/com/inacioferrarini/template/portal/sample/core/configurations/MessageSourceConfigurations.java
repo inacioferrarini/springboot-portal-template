@@ -24,6 +24,8 @@ public class MessageSourceConfigurations {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 		messageSource.setBasenames(
 			"classpath:/messages/temp",
+			"classpath:/messages/common/menus",
+			"classpath:/messages/common/messages",
 			"classpath:/messages/security/api-error-messages",
 			"classpath:/messages/security/ui-actions",
 			"classpath:/messages/security/ui-fields",

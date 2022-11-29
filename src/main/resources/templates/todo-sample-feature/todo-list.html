@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<th:block th:replace = "~{common/header :: header-content}"></th:block>
+<link rel="stylesheet" type="text/css" th:href="@{/css/dashboards.css}" />
+<link rel="stylesheet" type="text/css" th:href="@{/css/lists.css}" />
+</head>
+
+<body>
+	<div class="container-fluid">
+		<div class="row flex-nowrap">
+			<div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+				<div th:replace="~{common/menus :: side-menu}"></div>
+			</div>
+            <div class="col p-0">
+                <div class="container" style="background-color: red;">
+                	<h2 class="text-center">Todo List</h2>
+                </div>
+            </div>
+		</div>
+	</div>
+</body>
+</html>
