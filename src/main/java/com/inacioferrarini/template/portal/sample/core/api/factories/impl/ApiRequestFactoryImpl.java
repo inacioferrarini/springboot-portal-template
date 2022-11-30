@@ -1,4 +1,4 @@
-package com.inacioferrarini.template.portal.sample.security.api.factories.impl;
+package com.inacioferrarini.template.portal.sample.core.api.factories.impl;
 
 import java.util.Collections;
 
@@ -7,8 +7,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
-import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
-import com.inacioferrarini.template.portal.sample.security.api.requests.ApiRequestDto;
+import com.inacioferrarini.template.portal.sample.core.api.factories.ApiRequestFactory;
+import com.inacioferrarini.template.portal.sample.core.api.requests.ApiRequestDto;
 import com.inacioferrarini.template.portal.sample.security.dtos.JWTTokenDto;
 
 @Component

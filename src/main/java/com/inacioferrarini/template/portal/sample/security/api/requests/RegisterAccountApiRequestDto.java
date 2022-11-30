@@ -5,6 +5,7 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.inacioferrarini.template.portal.sample.core.api.requests.ApiRequestDto;
 import com.inacioferrarini.template.portal.sample.core.validators.Locale;
 
 public class RegisterAccountApiRequestDto implements ApiRequestDto {

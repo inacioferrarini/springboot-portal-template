@@ -24,8 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.inacioferrarini.template.portal.sample.core.api.factories.ApiRequestFactory;
 import com.inacioferrarini.template.portal.sample.core.messages.GlobalMessageHelper;
-import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
 import com.inacioferrarini.template.portal.sample.security.api.requests.RegisterAccountApiRequestDto;
 import com.inacioferrarini.template.portal.sample.security.api.responses.RegisterAccountApiResponseDto;
 import com.inacioferrarini.template.portal.sample.security.controllers.forms.RegisterAccountForm;

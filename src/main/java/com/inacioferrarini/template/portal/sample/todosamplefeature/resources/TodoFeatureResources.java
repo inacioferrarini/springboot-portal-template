@@ -9,13 +9,7 @@ public class TodoFeatureResources {
 
 		public static class ToDo {
 
-			public static final String ROOT = "/todo";
-			public static final String INDEX = "/";
-			public static final String SHOW_FORM = "/add";
-			public static final String CREATE_FORM = "/add";
-			public static final String EDIT = "/{id}";
-			public static final String UPDATE = "/update/{id}";
-			public static final String DELETE = "/delete/{id}";
+			public static final String ROOT = "/todos";
 
 		}
 

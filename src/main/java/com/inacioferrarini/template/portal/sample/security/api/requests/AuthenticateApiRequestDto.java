@@ -4,6 +4,8 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.inacioferrarini.template.portal.sample.core.api.requests.ApiRequestDto;
+
 public class AuthenticateApiRequestDto implements ApiRequestDto {
 
 	@NotEmpty

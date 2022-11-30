@@ -19,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.LocaleResolver;
 
 import com.inacioferrarini.template.portal.sample.core.api.errors.exceptions.WrapperException;
-import com.inacioferrarini.template.portal.sample.security.api.factories.ApiRequestFactory;
+import com.inacioferrarini.template.portal.sample.core.api.factories.ApiRequestFactory;
 import com.inacioferrarini.template.portal.sample.security.api.requests.AuthenticateApiRequestDto;
 import com.inacioferrarini.template.portal.sample.security.api.responses.AuthenticateResponseDto;
 import com.inacioferrarini.template.portal.sample.security.dtos.ApiUserDto;

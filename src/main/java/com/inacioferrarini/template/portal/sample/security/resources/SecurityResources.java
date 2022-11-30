@@ -27,8 +27,7 @@ public class SecurityResources {
 //
 //
 // TODO: Create a Dashboard entry point
-public static final String LOGIN_SUCCESS = TodoFeatureResources.Paths.ToDo.ROOT
-				.concat(TodoFeatureResources.Paths.ToDo.INDEX);
+public static final String LOGIN_SUCCESS = TodoFeatureResources.Paths.ToDo.ROOT;
 //
 //
 //
