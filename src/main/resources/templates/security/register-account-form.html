@@ -17,7 +17,7 @@
 				<div class="row mb-3">
 					<label for="idiom" class="col-sm-2 col-form-label"><span th:text="#{field.language}"></span>&nbsp;<span class="requiredField">*</span></label>
 					<div class="col-sm-10">
-						<select class="form-select" th:field="*{idiom}" onChange="changeIdiom(this.options[this.selectedIndex].value);">
+						<select class="form-select" th:field="*{idiom}" onChange="changeIdiom();">
 							<option selected disabled value="">[[#{field.select.defaultOption}]]</option>
 							<option th:each="idiom : *{supportedIdiomList}" th:value="${idiom.toLanguageTag()}" th:text="${idiom.getDisplayName(idiom)}"></option>
 						</select>				

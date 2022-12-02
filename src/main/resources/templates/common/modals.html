@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	xmlns="http://www.w3.org/1999/xhtml">
+
+		<div th:fragment="confirm-delete-modal" class="modal fade" id="confirmDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<input type="hidden" id="confirmDeleteModalDeleteUrlHiddenField">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="confirmDeleteModalTitle">Modal Title</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="confirmDeleteModalText">Modal Text</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><span th:text="#{label.action.close}"></span></button>
+						<button type="button" class="btn btn-danger" id="confirmDeleteModalDeleteButton"><span th:text="#{label.action.delete}"></span></button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+</html>

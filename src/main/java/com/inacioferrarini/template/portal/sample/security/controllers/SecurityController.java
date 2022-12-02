@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -13,21 +12,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.HttpClientErrorException.BadRequest;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.inacioferrarini.template.portal.sample.core.api.factories.ApiRequestFactory;
 import com.inacioferrarini.template.portal.sample.core.messages.GlobalMessageHelper;
-import com.inacioferrarini.template.portal.sample.security.api.requests.ActivateUserAccountApiRequestDto;
-import com.inacioferrarini.template.portal.sample.security.api.requests.ForgotPasswordApiRequestDto;
-import com.inacioferrarini.template.portal.sample.security.api.requests.ForgotUsernameApiRequestDto;
-import com.inacioferrarini.template.portal.sample.security.api.requests.PasswordResetApiRequestDto;
 import com.inacioferrarini.template.portal.sample.security.api.responses.ActivateUserAccountApiResponseDto;
 import com.inacioferrarini.template.portal.sample.security.api.responses.ForgotPasswordApiResponseDto;
 import com.inacioferrarini.template.portal.sample.security.api.responses.ForgotUsernameApiResponseDto;
 import com.inacioferrarini.template.portal.sample.security.api.responses.PasswordResetApiResponseDto;
+import com.inacioferrarini.template.portal.sample.security.api.services.SecurityApiService;
 import com.inacioferrarini.template.portal.sample.security.controllers.forms.ForgotPasswordForm;
 import com.inacioferrarini.template.portal.sample.security.controllers.forms.ForgotUsernameForm;
 import com.inacioferrarini.template.portal.sample.security.controllers.forms.PasswordResetForm;
@@ -41,10 +35,7 @@ public class SecurityController {
 	private static final String TOKEN_KEY = "token";
 
 	@Autowired
-	private RestTemplate restTemplate;
-
-	@Autowired
-	private ApiRequestFactory apiRequestFactory;
+	private SecurityApiService api;
 
 	@GetMapping(SecurityResources.Paths.Security.LOGIN)
 	public String showLoginPage(
@@ -58,17 +49,9 @@ public class SecurityController {
 		@RequestParam(name = TOKEN_KEY) String token,
 		RedirectAttributes redirectAttributes
 	) {
-		ActivateUserAccountApiRequestDto activateAccountRequest = new ActivateUserAccountApiRequestDto(
-			token
-		);
-		HttpEntity<ActivateUserAccountApiRequestDto> apiRequest = apiRequestFactory
-			.requestEntity(activateAccountRequest);
 		try {
-			ResponseEntity<ActivateUserAccountApiResponseDto> apiResponse = restTemplate.postForEntity(
-				SecurityResources.Paths.Api.ACTIVATE_USER,
-				apiRequest,
-				ActivateUserAccountApiResponseDto.class
-			);
+			ResponseEntity<ActivateUserAccountApiResponseDto> apiResponse = api.activateAccount(token);
+			// TODO: Validate return code
 
 			GlobalMessageHelper.setGlobalSuccessMessage(
 				"Activate Account - Success",
@@ -103,17 +86,11 @@ public class SecurityController {
 			return new ModelAndView(SecurityResources.Views.FORGOT_USERNAME_FORM);
 		}
 
-		ForgotUsernameApiRequestDto forgotUsernameApiRequest = new ForgotUsernameApiRequestDto(
-			form.getEmail()
-		);
-		HttpEntity<ForgotUsernameApiRequestDto> apiRequest = apiRequestFactory
-			.requestEntity(forgotUsernameApiRequest);
 		try {
-			ResponseEntity<ForgotUsernameApiResponseDto> apiResponse = restTemplate.postForEntity(
-				SecurityResources.Paths.Api.FORGOT_USERNAME,
-				apiRequest,
-				ForgotUsernameApiResponseDto.class
+			ResponseEntity<ForgotUsernameApiResponseDto> apiResponse = api.forgotUsername(
+				form.getEmail()
 			);
+			// TODO: Validate return code
 
 			GlobalMessageHelper.setGlobalSuccessMessage(
 				"Forgot username - email sent",
@@ -129,7 +106,7 @@ public class SecurityController {
 
 		return new ModelAndView(new RedirectView(SecurityResources.Paths.Configuration.LOGIN_PAGE, true));
 	}
-	
+
 	@GetMapping(SecurityResources.Paths.Security.FORGOT_PASSWORD)
 	public String showForgotPasswordPage(
 		ForgotPasswordForm form
@@ -148,17 +125,11 @@ public class SecurityController {
 			return new ModelAndView(SecurityResources.Views.FORGOT_PASSWORD_FORM);
 		}
 
-		ForgotPasswordApiRequestDto forgotPasswordApiRequest = new ForgotPasswordApiRequestDto(
-			form.getUsername()
-		);
-		HttpEntity<ForgotPasswordApiRequestDto> apiRequest = apiRequestFactory
-			.requestEntity(forgotPasswordApiRequest);
 		try {
-			ResponseEntity<ForgotPasswordApiResponseDto> apiResponse = restTemplate.postForEntity(
-				SecurityResources.Paths.Api.FORGOT_PASSWORD,
-				apiRequest,
-				ForgotPasswordApiResponseDto.class
+			ResponseEntity<ForgotPasswordApiResponseDto> apiResponse = api.forgotPassword(
+				form.getUsername()
 			);
+			// TODO: Validate return code
 
 			GlobalMessageHelper.setGlobalSuccessMessage(
 				"Forgot password - email sent",
@@ -196,18 +167,12 @@ public class SecurityController {
 			return new ModelAndView(SecurityResources.Views.PASSWORD_RESET_FORM);
 		}
 
-		PasswordResetApiRequestDto passwordRestApiRequest = new PasswordResetApiRequestDto(
-			form.getToken(),
-			form.getNewPassword()
-		);
-		HttpEntity<PasswordResetApiRequestDto> apiRequest = apiRequestFactory
-			.requestEntity(passwordRestApiRequest);
 		try {
-			ResponseEntity<PasswordResetApiResponseDto> apiResponse = restTemplate.postForEntity(
-				SecurityResources.Paths.Api.PASSWORD_RESET,
-				apiRequest,
-				PasswordResetApiResponseDto.class
+			ResponseEntity<PasswordResetApiResponseDto> apiResponse = api.passwordReset(
+				form.getToken(),
+				form.getNewPassword()
 			);
+			// TODO: Validate return code
 
 			GlobalMessageHelper.setGlobalSuccessMessage(
 				"Password Reset Success",

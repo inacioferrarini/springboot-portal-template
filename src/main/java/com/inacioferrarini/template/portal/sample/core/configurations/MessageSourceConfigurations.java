@@ -23,13 +23,15 @@ public class MessageSourceConfigurations {
 	public MessageSource messageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 		messageSource.setBasenames(
-			"classpath:/messages/temp",
+			"classpath:/messages/",
 			"classpath:/messages/common/menus",
 			"classpath:/messages/common/messages",
+			"classpath:/messages/common/ui-labels",
 			"classpath:/messages/security/api-error-messages",
 			"classpath:/messages/security/ui-actions",
 			"classpath:/messages/security/ui-fields",
-			"classpath:/messages/security/ui-titles"
+			"classpath:/messages/security/ui-titles",
+			"classpath:/messages/todo/ui"
 		);
 		messageSource.setDefaultEncoding("UTF-8");
 		return messageSource;

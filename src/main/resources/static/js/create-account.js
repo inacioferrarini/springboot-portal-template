@@ -1,5 +1,5 @@
-function changeIdiom(selectedLanguage) {
+function changeIdiom() {
 	const form = document.getElementById('createAccountForm');
 	form.action = form.action + '/changeIdiom';
 	form.submit();	
-}1
+}

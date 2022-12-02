@@ -28,8 +28,34 @@ public class ApiRequestFactoryImpl implements ApiRequestFactory {
 	}
 
 	@Override
+	public HttpEntity<String> emptyRequestEntity() {
+		HttpHeaders headers = getHeaders();
+		HttpEntity<String> requestEntity = new HttpEntity<>("parameters", headers);
+		return requestEntity;
+	}
+
+	@Override
+	public HttpEntity<String> emptyRequestEntity(JWTTokenDto token) {
+		HttpHeaders headers = getHeaders(token);
+		HttpEntity<String> requestEntity = new HttpEntity<>("parameters", headers);
+		return requestEntity;
+	}
+
+	@Override
 	public <T extends ApiRequestDto> HttpEntity<T> requestEntity(T request) {
 		HttpHeaders headers = getHeaders();
+		HttpEntity<T> requestEntity = new HttpEntity<>(
+			request, headers
+		);
+		return requestEntity;
+	}
+
+	@Override
+	public <T extends ApiRequestDto> HttpEntity<T> requestEntity(
+		T request,
+		JWTTokenDto token
+	) {
+		HttpHeaders headers = getHeaders(token);
 		HttpEntity<T> requestEntity = new HttpEntity<>(
 			request, headers
 		);

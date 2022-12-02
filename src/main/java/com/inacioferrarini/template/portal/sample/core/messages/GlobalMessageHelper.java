@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.FlashMapManager;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -33,6 +34,16 @@ public class GlobalMessageHelper {
 		final RedirectAttributes redirectAttributes
 	) {
 		redirectAttributes.addFlashAttribute(
+			MessageConstants.GLOBAL_MESSAGE_KEY,
+			globalMessage
+		);
+	}
+
+	public static void setLocalMessage(
+		final GlobalMessageDto globalMessage,
+		final Model model
+	) {
+		model.addAttribute(
 			MessageConstants.GLOBAL_MESSAGE_KEY,
 			globalMessage
 		);
@@ -98,6 +109,28 @@ public class GlobalMessageHelper {
 			GlobalMessageDto.Type.ERROR
 		);
 		setGlobalMessage(globalMessage, request, response);
+	}
+
+	public static void setLocalSuccessMessage(
+		final String message,
+		final Model model
+	) {
+		final GlobalMessageDto globalMessage = new GlobalMessageDto(
+			message,
+			GlobalMessageDto.Type.SUCCESS
+		);
+		setLocalMessage(globalMessage, model);
+	}
+
+	public static void setLocalErrorMessage(
+		final String message,
+		final Model model
+	) {
+		final GlobalMessageDto globalMessage = new GlobalMessageDto(
+			message,
+			GlobalMessageDto.Type.ERROR
+		);
+		setLocalMessage(globalMessage, model);
 	}
 
 }

@@ -8,21 +8,28 @@ public class TodoDto {
 		OPEN, COMPLETED;
 	}
 
+	private final Long id;
 	private final String name;
 	private final String description;
-	private final LocalDate creationDate;
+	private final LocalDate creationDate; // TODO: Json value conversion is failing
 	private final StatusType status;
 
 	public TodoDto(
+		final Long id,
 		final String name,
 		final String description,
 		final LocalDate creationDate,
 		final StatusType status
 	) {
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.creationDate = creationDate;
 		this.status = status;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public String getName() {
