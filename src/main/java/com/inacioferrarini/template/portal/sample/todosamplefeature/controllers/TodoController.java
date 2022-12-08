@@ -22,7 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.inacioferrarini.template.portal.sample.core.api.dtos.RestPage;
-import com.inacioferrarini.template.portal.sample.core.messages.GlobalMessageHelper;
+import com.inacioferrarini.template.portal.sample.core.messages.UserMessageHelper;
 import com.inacioferrarini.template.portal.sample.security.components.AuthenticationService;
 import com.inacioferrarini.template.portal.sample.todosamplefeature.apis.services.TodoApiService;
 import com.inacioferrarini.template.portal.sample.todosamplefeature.controllers.forms.TodoForm;
@@ -89,7 +89,7 @@ public class TodoController {
 			model.addAttribute("size", size);
 			model.addAttribute("todoList", apiResponse.getBody());
 		} catch (Exception ex) {
-			GlobalMessageHelper.setGlobalErrorMessage(
+			UserMessageHelper.setGlobalErrorMessage(
 				getMessage(API_FIND_ERROR),
 				redirectAttributes
 			);
@@ -134,12 +134,12 @@ public class TodoController {
 			);
 			// TODO: Validate return status code
 
-			GlobalMessageHelper.setGlobalSuccessMessage(
+			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(API_CREATE_SUCCESS),
 				redirectAttributes
 			);
 		} catch (Exception ex) {
-			GlobalMessageHelper.setLocalErrorMessage(getMessage(API_CREATE_ERROR), model);
+			UserMessageHelper.setLocalErrorMessage(getMessage(API_CREATE_ERROR), model);
 			model.addAttribute("action", TodoFeatureResources.Paths.ToDo.ROOT + "/add");
 			populateDropDowns(form);
 			return new ModelAndView(FORM);
@@ -167,7 +167,7 @@ public class TodoController {
 			form.setDescription(apiResponse.getBody().getDescription());
 			form.setStatus(apiResponse.getBody().getStatus());
 		} catch (Exception ex) {
-			GlobalMessageHelper.setGlobalErrorMessage(
+			UserMessageHelper.setGlobalErrorMessage(
 				getMessage(API_FIND_ERROR),
 				redirectAttributes
 			);
@@ -201,12 +201,12 @@ public class TodoController {
 			);
 			// TODO: Validate return status code
 
-			GlobalMessageHelper.setGlobalSuccessMessage(
+			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(API_UPDATE_SUCCESS),
 				redirectAttributes
 			);
 		} catch (Exception ex) {
-			GlobalMessageHelper.setLocalErrorMessage(getMessage(API_UPDATE_ERROR), model);
+			UserMessageHelper.setLocalErrorMessage(getMessage(API_UPDATE_ERROR), model);
 			model.addAttribute("action", TodoFeatureResources.Paths.ToDo.ROOT + "/update/" + id);
 			populateDropDowns(form);
 			return new ModelAndView(FORM);
@@ -233,12 +233,12 @@ public class TodoController {
 
 			// TODO: Validate return status code
 
-			GlobalMessageHelper.setGlobalSuccessMessage(
+			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(API_DELETE_SUCCESS),
 				redirectAttributes
 			);
 		} catch (Exception ex) {
-			GlobalMessageHelper.setGlobalErrorMessage(
+			UserMessageHelper.setGlobalErrorMessage(
 				getMessage(API_DELETE_ERROR),
 				redirectAttributes
 			);
@@ -266,12 +266,12 @@ public class TodoController {
 
 			// TODO: Validate return status code
 
-			GlobalMessageHelper.setGlobalSuccessMessage(
+			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(API_DELETE_MANY_SUCCESS),
 				redirectAttributes
 			);
 		} catch (Exception ex) {
-			GlobalMessageHelper.setGlobalErrorMessage(
+			UserMessageHelper.setGlobalErrorMessage(
 				getMessage(API_DELETE_MANY_ERROR),
 				redirectAttributes
 			);

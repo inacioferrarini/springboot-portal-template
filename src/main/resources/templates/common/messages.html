@@ -3,15 +3,15 @@
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
 	xmlns="http://www.w3.org/1999/xhtml">
 
-			<div th:fragment="global-message" th:if="${globalMessage != null}">
-				<div th:if="${globalMessage != null && globalMessage.type.name() == 'SUCCESS'}" class="alert alert-success alert-dismissible fade show" role="alert">
+			<div th:fragment="global-message" th:if="${userMessage != null}">
+				<div th:if="${userMessage != null && userMessage.type.name() == 'SUCCESS'}" class="alert alert-success alert-dismissible fade show" role="alert">
 					<i class="bi-check-circle-fill"></i>
-					<strong><span th:text="#{message.success.title}"></span></strong>&nbsp;<span th:text="${globalMessage.message}"/></span>
+					<strong><span th:text="#{message.success.title}"></span></strong>&nbsp;<span th:text="${userMessage.message}"/></span>
 					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 				</div>
-				<div th:if="${globalMessage != null && globalMessage.type.name() == 'ERROR'}" class="alert alert-danger alert-dismissible fade show" role="alert">
+				<div th:if="${userMessage != null && userMessage.type.name() == 'ERROR'}" class="alert alert-danger alert-dismissible fade show" role="alert">
 					<i class="bi-exclamation-triangle-fill"></i>
-					<strong><span th:text="#{message.error.title}"></span></strong>&nbsp;<span th:text="${globalMessage.message}"/></span>
+					<strong><span th:text="#{message.error.title}"></span></strong>&nbsp;<span th:text="${userMessage.message}"/></span>
 					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 				</div>
 			</div>

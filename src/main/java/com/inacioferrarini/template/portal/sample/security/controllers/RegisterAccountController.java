@@ -22,7 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.inacioferrarini.template.portal.sample.core.messages.GlobalMessageHelper;
+import com.inacioferrarini.template.portal.sample.core.messages.UserMessageHelper;
 import com.inacioferrarini.template.portal.sample.security.api.responses.RegisterAccountApiResponseDto;
 import com.inacioferrarini.template.portal.sample.security.api.services.SecurityApiService;
 import com.inacioferrarini.template.portal.sample.security.controllers.forms.RegisterAccountForm;
@@ -66,7 +66,7 @@ public class RegisterAccountController {
 			);
 
 			// TODO: Message from bundle
-			GlobalMessageHelper.setGlobalSuccessMessage(
+			UserMessageHelper.setGlobalSuccessMessage(
 				"Register Account - activation email sent",
 				redirectAttributes
 			);
@@ -74,7 +74,7 @@ public class RegisterAccountController {
 			System.out.println("Received status: " + apiResponse.getBody().getStatus());
 			System.out.println("Received message: " + apiResponse.getBody().getMessage());
 		} catch (BadRequest | Conflict exception) {
-			GlobalMessageHelper.setGlobalErrorMessage(
+			UserMessageHelper.setGlobalErrorMessage(
 				exception.getResponseBodyAsString(),
 				redirectAttributes
 			);
