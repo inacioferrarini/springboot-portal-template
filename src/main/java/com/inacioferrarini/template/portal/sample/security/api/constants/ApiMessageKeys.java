@@ -2,7 +2,7 @@ package com.inacioferrarini.template.portal.sample.security.api.constants;
 
 public class ApiMessageKeys {
 
-	public static final String INVALID_CREDENTIALS = "api.authentication.invalidCredentials.message";
-	public static final String ACTIVATION_PENDING = "api.authentication.pendingActivation.message";
+	public static final String INVALID_CREDENTIALS = "message.api.authentication.invalidCredentials";
+	public static final String ACTIVATION_PENDING = "message.api.authentication.pendingActivation";
 
 }

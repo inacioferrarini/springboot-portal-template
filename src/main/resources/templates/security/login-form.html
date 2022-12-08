@@ -12,7 +12,7 @@
 		<div th:replace="~{common/messages :: global-message}"></div>
 		<div class="small-form">
 			<form th:action="@{/security/login}" class="card-body" method="post">
-				<h2 th:text="#{security.login.title}"></h2>
+				<h2 th:text="#{title.security.login}"></h2>
 				<div class="col-12 my-3">
 					<label for="username" class="form-label"><span th:text="#{field.username}"></span></label>
 					<input name="username" class="form-control" th:placeholder="#{field.username}" />
@@ -22,12 +22,12 @@
 					<input type="password" name="password" class="form-control" th:placeholder="#{field.password}" />
 				</div>	
 				<button class="btn btn-primary col-12" type="submit">
-					<span th:text="#{action.doLogin}"></span>
+					<span th:text="#{action.security.doLogin}"></span>
 				</button>
 				<!-- Add Remember Me -->
 				<!-- Add Forgot Password -->
 			</form>
-			<p class="text-center"><a th:href="@{/security/registerAccount}" href="#"><span th:text="#{action.createAccount}"></span></a></p>
+			<p class="text-center"><a th:href="@{/security/registerAccount}" href="#"><span th:text="#{action.security.createAccount}"></span></a></p>
 		</div>
 	</div>
 </body>

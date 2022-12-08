@@ -17,7 +17,7 @@
 			</div>
             <div class="col p-0">
                 <div class="container medium-form">
-					<h1 class="mt-3 mb-3"><span th:text="#{feature.todo.title}"></span></h1>
+					<h1 class="mt-3 mb-3"><span th:text="#{title.todo}"></span></h1>
                 	<div th:replace="~{common/messages :: global-message}"></div>
 					<form th:action="@{${action}}" th:object="${todoForm}" class="card-body" method="post" id="todoForm">
 						<div class="row mb-3">
