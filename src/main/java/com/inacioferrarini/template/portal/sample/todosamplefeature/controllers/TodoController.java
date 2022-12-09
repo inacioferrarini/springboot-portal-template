@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.inacioferrarini.template.portal.sample.core.api.dtos.RestPage;
-import com.inacioferrarini.template.portal.sample.core.messages.GlobalMessageHelper;
+import com.inacioferrarini.template.portal.sample.core.messages.UserMessageHelper;
 import com.inacioferrarini.template.portal.sample.security.components.AuthenticationService;
 import com.inacioferrarini.template.portal.sample.todosamplefeature.apis.services.TodoApiService;
 import com.inacioferrarini.template.portal.sample.todosamplefeature.controllers.forms.TodoForm;
@@ -75,21 +76,14 @@ public class TodoController {
 				page,
 				size
 			);
-//			if (apiResponse.getStatusCode() != HttpStatus.OK) {
-//				// TODO: Find a proper way to get error message
-//				GlobalMessageHelper.setGlobalErrorMessage(
-//					"Error while fetching data", // TODO: Get error message from bundle
-//					redirectAttributes
-//				);
-//			}
 
 			model.addAttribute("name", name);
 			model.addAttribute("description", description);
-			model.addAttribute("page", page);
+			model.addAttribute("page", apiResponse.getBody().getNumber() + 1);
 			model.addAttribute("size", size);
 			model.addAttribute("todoList", apiResponse.getBody());
 		} catch (Exception ex) {
-			GlobalMessageHelper.setGlobalErrorMessage(
+			UserMessageHelper.setGlobalErrorMessage(
 				getMessage(API_FIND_ERROR),
 				redirectAttributes
 			);
@@ -132,14 +126,13 @@ public class TodoController {
 				form.getDescription(),
 				form.getStatus()
 			);
-			// TODO: Validate return status code
 
-			GlobalMessageHelper.setGlobalSuccessMessage(
+			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(API_CREATE_SUCCESS),
 				redirectAttributes
 			);
 		} catch (Exception ex) {
-			GlobalMessageHelper.setLocalErrorMessage(getMessage(API_CREATE_ERROR), model);
+			UserMessageHelper.setLocalErrorMessage(getMessage(API_CREATE_ERROR), model);
 			model.addAttribute("action", TodoFeatureResources.Paths.ToDo.ROOT + "/add");
 			populateDropDowns(form);
 			return new ModelAndView(FORM);
@@ -160,14 +153,14 @@ public class TodoController {
 				authenticationService.getUser().getToken(),
 				id
 			);
-			// TODO: Validate return status code
+
 			model.addAttribute("action", TodoFeatureResources.Paths.ToDo.ROOT + "/update/" + id);
 			populateDropDowns(form);
 			form.setName(apiResponse.getBody().getName());
 			form.setDescription(apiResponse.getBody().getDescription());
 			form.setStatus(apiResponse.getBody().getStatus());
 		} catch (Exception ex) {
-			GlobalMessageHelper.setGlobalErrorMessage(
+			UserMessageHelper.setGlobalErrorMessage(
 				getMessage(API_FIND_ERROR),
 				redirectAttributes
 			);
@@ -199,14 +192,13 @@ public class TodoController {
 				form.getDescription(),
 				form.getStatus()
 			);
-			// TODO: Validate return status code
 
-			GlobalMessageHelper.setGlobalSuccessMessage(
+			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(API_UPDATE_SUCCESS),
 				redirectAttributes
 			);
 		} catch (Exception ex) {
-			GlobalMessageHelper.setLocalErrorMessage(getMessage(API_UPDATE_ERROR), model);
+			UserMessageHelper.setLocalErrorMessage(getMessage(API_UPDATE_ERROR), model);
 			model.addAttribute("action", TodoFeatureResources.Paths.ToDo.ROOT + "/update/" + id);
 			populateDropDowns(form);
 			return new ModelAndView(FORM);
@@ -225,20 +217,17 @@ public class TodoController {
 		RedirectAttributes redirectAttributes
 	) {
 		try {
-			// TODO: Try to get status code from the response
 			api.delete(
 				authenticationService.getUser().getToken(),
 				id
 			);
 
-			// TODO: Validate return status code
-
-			GlobalMessageHelper.setGlobalSuccessMessage(
+			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(API_DELETE_SUCCESS),
 				redirectAttributes
 			);
 		} catch (Exception ex) {
-			GlobalMessageHelper.setGlobalErrorMessage(
+			UserMessageHelper.setGlobalErrorMessage(
 				getMessage(API_DELETE_ERROR),
 				redirectAttributes
 			);
@@ -258,20 +247,17 @@ public class TodoController {
 		RedirectAttributes redirectAttributes
 	) {
 		try {
-			// TODO: Try to get status code from the response
 			api.deleteMany(
 				authenticationService.getUser().getToken(),
 				idList
 			);
 
-			// TODO: Validate return status code
-
-			GlobalMessageHelper.setGlobalSuccessMessage(
+			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(API_DELETE_MANY_SUCCESS),
 				redirectAttributes
 			);
 		} catch (Exception ex) {
-			GlobalMessageHelper.setGlobalErrorMessage(
+			UserMessageHelper.setGlobalErrorMessage(
 				getMessage(API_DELETE_MANY_ERROR),
 				redirectAttributes
 			);

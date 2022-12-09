@@ -1,6 +1,6 @@
 package com.inacioferrarini.template.portal.sample.core.messages;
 
-public class GlobalMessageDto {
+public class UserMessageDto {
 	
 	public enum Type {
 		SUCCESS, ERROR;
@@ -9,9 +9,9 @@ public class GlobalMessageDto {
 	private final String message;
 	private final Type type;
 
-	public GlobalMessageDto(
-		String message,
-		Type type
+	public UserMessageDto(
+		final String message,
+		final Type type
 	) {
 		this.message = message;
 		this.type = type;

@@ -13,9 +13,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.support.SessionFlashMapManager;
 
-public class GlobalMessageHelper {
+public class UserMessageHelper {
 
-	public static Optional<GlobalMessageDto> getGlobalMessage(
+	public static Optional<UserMessageDto> getGlobalMessage(
 		final HttpServletRequest request
 	) {
 		Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
@@ -25,26 +25,16 @@ public class GlobalMessageHelper {
 		}
 
 		return Optional.of(
-			(GlobalMessageDto) inputFlashMap.get(MessageConstants.GLOBAL_MESSAGE_KEY)
+			(UserMessageDto) inputFlashMap.get(MessageConstants.USER_MESSAGE_KEY)
 		);
 	}
 
 	public static void setGlobalMessage(
-		final GlobalMessageDto globalMessage,
+		final UserMessageDto globalMessage,
 		final RedirectAttributes redirectAttributes
 	) {
 		redirectAttributes.addFlashAttribute(
-			MessageConstants.GLOBAL_MESSAGE_KEY,
-			globalMessage
-		);
-	}
-
-	public static void setLocalMessage(
-		final GlobalMessageDto globalMessage,
-		final Model model
-	) {
-		model.addAttribute(
-			MessageConstants.GLOBAL_MESSAGE_KEY,
+			MessageConstants.USER_MESSAGE_KEY,
 			globalMessage
 		);
 	}
@@ -53,26 +43,26 @@ public class GlobalMessageHelper {
 		final String message,
 		final RedirectAttributes redirectAttributes
 	) {
-		final GlobalMessageDto globalMessage = new GlobalMessageDto(
+		final UserMessageDto userMessage = new UserMessageDto(
 			message,
-			GlobalMessageDto.Type.SUCCESS
+			UserMessageDto.Type.SUCCESS
 		);
-		setGlobalMessage(globalMessage, redirectAttributes);
+		setGlobalMessage(userMessage, redirectAttributes);
 	}
 
 	public static void setGlobalErrorMessage(
 		final String message,
 		final RedirectAttributes redirectAttributes
 	) {
-		final GlobalMessageDto globalMessage = new GlobalMessageDto(
+		final UserMessageDto userMessage = new UserMessageDto(
 			message,
-			GlobalMessageDto.Type.ERROR
+			UserMessageDto.Type.ERROR
 		);
-		setGlobalMessage(globalMessage, redirectAttributes);
+		setGlobalMessage(userMessage, redirectAttributes);
 	}
 
 	public static void setGlobalMessage(
-		final GlobalMessageDto globalMessage,
+		final UserMessageDto globalMessage,
 		final HttpServletRequest request,
 		final HttpServletResponse response
 	) {
@@ -80,7 +70,7 @@ public class GlobalMessageHelper {
 		final FlashMapManager flashMapManager = new SessionFlashMapManager();
 
 		flashMap.put(
-			MessageConstants.GLOBAL_MESSAGE_KEY,
+			MessageConstants.USER_MESSAGE_KEY,
 			globalMessage
 		);
 
@@ -92,11 +82,11 @@ public class GlobalMessageHelper {
 		final HttpServletRequest request,
 		final HttpServletResponse response
 	) {
-		final GlobalMessageDto globalMessage = new GlobalMessageDto(
+		final UserMessageDto userMessage = new UserMessageDto(
 			message,
-			GlobalMessageDto.Type.SUCCESS
+			UserMessageDto.Type.SUCCESS
 		);
-		setGlobalMessage(globalMessage, request, response);
+		setGlobalMessage(userMessage, request, response);
 	}
 
 	public static void setGlobalErrorMessage(
@@ -104,33 +94,43 @@ public class GlobalMessageHelper {
 		final HttpServletRequest request,
 		final HttpServletResponse response
 	) {
-		final GlobalMessageDto globalMessage = new GlobalMessageDto(
+		final UserMessageDto userMessage = new UserMessageDto(
 			message,
-			GlobalMessageDto.Type.ERROR
+			UserMessageDto.Type.ERROR
 		);
-		setGlobalMessage(globalMessage, request, response);
+		setGlobalMessage(userMessage, request, response);
 	}
 
+	public static void setLocalMessage(
+		final UserMessageDto globalMessage,
+		final Model model
+	) {
+		model.addAttribute(
+			MessageConstants.USER_MESSAGE_KEY,
+			globalMessage
+		);
+	}
+		
 	public static void setLocalSuccessMessage(
 		final String message,
 		final Model model
 	) {
-		final GlobalMessageDto globalMessage = new GlobalMessageDto(
+		final UserMessageDto userMessage = new UserMessageDto(
 			message,
-			GlobalMessageDto.Type.SUCCESS
+			UserMessageDto.Type.SUCCESS
 		);
-		setLocalMessage(globalMessage, model);
+		setLocalMessage(userMessage, model);
 	}
 
 	public static void setLocalErrorMessage(
 		final String message,
 		final Model model
 	) {
-		final GlobalMessageDto globalMessage = new GlobalMessageDto(
+		final UserMessageDto userMessage = new UserMessageDto(
 			message,
-			GlobalMessageDto.Type.ERROR
+			UserMessageDto.Type.ERROR
 		);
-		setLocalMessage(globalMessage, model);
+		setLocalMessage(userMessage, model);
 	}
 
 }

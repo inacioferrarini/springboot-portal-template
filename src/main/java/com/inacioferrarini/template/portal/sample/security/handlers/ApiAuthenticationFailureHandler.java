@@ -12,7 +12,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
-import com.inacioferrarini.template.portal.sample.core.messages.GlobalMessageHelper;
+import com.inacioferrarini.template.portal.sample.core.messages.UserMessageHelper;
 import com.inacioferrarini.template.portal.sample.security.api.constants.ApiMessageKeys;
 import com.inacioferrarini.template.portal.sample.security.errors.exceptions.CompoundSecurityException;
 import com.inacioferrarini.template.portal.sample.security.errors.exceptions.InvalidUserCredentialsException;
@@ -40,7 +40,7 @@ public class ApiAuthenticationFailureHandler implements AuthenticationFailureHan
 			.map(CompoundSecurityException.class::cast)
 			.ifPresent(apiException -> {
 				final String message = getStringFromBundle(ApiMessageKeys.INVALID_CREDENTIALS);
-				GlobalMessageHelper.setGlobalErrorMessage(message, request, response);
+				UserMessageHelper.setGlobalErrorMessage(message, request, response);
 			});
 
 		Optional.of(exception)
@@ -48,7 +48,7 @@ public class ApiAuthenticationFailureHandler implements AuthenticationFailureHan
 			.map(InvalidUserCredentialsException.class::cast)
 			.ifPresent(apiException -> {
 				final String message = getStringFromBundle(ApiMessageKeys.INVALID_CREDENTIALS);
-				GlobalMessageHelper.setGlobalErrorMessage(message, request, response);
+				UserMessageHelper.setGlobalErrorMessage(message, request, response);
 			});
 
 		Optional.of(exception)
@@ -56,7 +56,7 @@ public class ApiAuthenticationFailureHandler implements AuthenticationFailureHan
 			.map(UserPendingActivationException.class::cast)
 			.ifPresent(apiException -> {
 				final String message = getStringFromBundle(ApiMessageKeys.ACTIVATION_PENDING);
-				GlobalMessageHelper.setGlobalErrorMessage(message, request, response);
+				UserMessageHelper.setGlobalErrorMessage(message, request, response);
 			});
 
 		response.sendRedirect(loginUrl);

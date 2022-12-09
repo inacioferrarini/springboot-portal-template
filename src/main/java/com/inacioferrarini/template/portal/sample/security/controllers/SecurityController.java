@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.inacioferrarini.template.portal.sample.core.messages.GlobalMessageHelper;
+import com.inacioferrarini.template.portal.sample.core.messages.UserMessageHelper;
 import com.inacioferrarini.template.portal.sample.security.api.responses.ActivateUserAccountApiResponseDto;
 import com.inacioferrarini.template.portal.sample.security.api.responses.ForgotPasswordApiResponseDto;
 import com.inacioferrarini.template.portal.sample.security.api.responses.ForgotUsernameApiResponseDto;
@@ -53,12 +53,12 @@ public class SecurityController {
 			ResponseEntity<ActivateUserAccountApiResponseDto> apiResponse = api.activateAccount(token);
 			// TODO: Validate return code
 
-			GlobalMessageHelper.setGlobalSuccessMessage(
+			UserMessageHelper.setGlobalSuccessMessage(
 				"Activate Account - Success",
 				redirectAttributes
 			);
 		} catch (BadRequest exception) {
-			GlobalMessageHelper.setGlobalErrorMessage(
+			UserMessageHelper.setGlobalErrorMessage(
 				exception.getResponseBodyAsString(),
 				redirectAttributes
 			);
@@ -92,12 +92,12 @@ public class SecurityController {
 			);
 			// TODO: Validate return code
 
-			GlobalMessageHelper.setGlobalSuccessMessage(
+			UserMessageHelper.setGlobalSuccessMessage(
 				"Forgot username - email sent",
 				redirectAttributes
 			);
 		} catch (BadRequest exception) {
-			GlobalMessageHelper.setGlobalErrorMessage(
+			UserMessageHelper.setGlobalErrorMessage(
 				exception.getResponseBodyAsString(),
 				redirectAttributes
 			);
@@ -131,12 +131,12 @@ public class SecurityController {
 			);
 			// TODO: Validate return code
 
-			GlobalMessageHelper.setGlobalSuccessMessage(
+			UserMessageHelper.setGlobalSuccessMessage(
 				"Forgot password - email sent",
 				redirectAttributes
 			);
 		} catch (BadRequest exception) {
-			GlobalMessageHelper.setGlobalErrorMessage(
+			UserMessageHelper.setGlobalErrorMessage(
 				exception.getResponseBodyAsString(),
 				redirectAttributes
 			);
@@ -174,12 +174,12 @@ public class SecurityController {
 			);
 			// TODO: Validate return code
 
-			GlobalMessageHelper.setGlobalSuccessMessage(
+			UserMessageHelper.setGlobalSuccessMessage(
 				"Password Reset Success",
 				redirectAttributes
 			);
 		} catch (BadRequest exception) {
-			GlobalMessageHelper.setGlobalErrorMessage(
+			UserMessageHelper.setGlobalErrorMessage(
 				exception.getResponseBodyAsString(),
 				redirectAttributes
 			);
