@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -75,17 +76,10 @@ public class TodoController {
 				page,
 				size
 			);
-//			if (apiResponse.getStatusCode() != HttpStatus.OK) {
-//				// TODO: Find a proper way to get error message
-//				GlobalMessageHelper.setGlobalErrorMessage(
-//					"Error while fetching data", // TODO: Get error message from bundle
-//					redirectAttributes
-//				);
-//			}
 
 			model.addAttribute("name", name);
 			model.addAttribute("description", description);
-			model.addAttribute("page", page);
+			model.addAttribute("page", apiResponse.getBody().getNumber() + 1);
 			model.addAttribute("size", size);
 			model.addAttribute("todoList", apiResponse.getBody());
 		} catch (Exception ex) {
@@ -132,7 +126,6 @@ public class TodoController {
 				form.getDescription(),
 				form.getStatus()
 			);
-			// TODO: Validate return status code
 
 			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(API_CREATE_SUCCESS),
@@ -160,7 +153,7 @@ public class TodoController {
 				authenticationService.getUser().getToken(),
 				id
 			);
-			// TODO: Validate return status code
+
 			model.addAttribute("action", TodoFeatureResources.Paths.ToDo.ROOT + "/update/" + id);
 			populateDropDowns(form);
 			form.setName(apiResponse.getBody().getName());
@@ -199,7 +192,6 @@ public class TodoController {
 				form.getDescription(),
 				form.getStatus()
 			);
-			// TODO: Validate return status code
 
 			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(API_UPDATE_SUCCESS),
@@ -225,13 +217,10 @@ public class TodoController {
 		RedirectAttributes redirectAttributes
 	) {
 		try {
-			// TODO: Try to get status code from the response
 			api.delete(
 				authenticationService.getUser().getToken(),
 				id
 			);
-
-			// TODO: Validate return status code
 
 			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(API_DELETE_SUCCESS),
@@ -258,13 +247,10 @@ public class TodoController {
 		RedirectAttributes redirectAttributes
 	) {
 		try {
-			// TODO: Try to get status code from the response
 			api.deleteMany(
 				authenticationService.getUser().getToken(),
 				idList
 			);
-
-			// TODO: Validate return status code
 
 			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(API_DELETE_MANY_SUCCESS),
