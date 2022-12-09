@@ -23,9 +23,9 @@ public class MessageSourceConfigurations {
 	public MessageSource messageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
 		messageSource.setBasenames(
-			"classpath:/messages/common/strings.properties",
-			"classpath:/messages/security/strings.properties",
-			"classpath:/messages/todo/strings.properties"			
+			"classpath:/messages/common/strings",
+			"classpath:/messages/security/strings",
+			"classpath:/messages/todo/strings"			
 		);
 		messageSource.setDefaultEncoding("UTF-8");
 		return messageSource;
