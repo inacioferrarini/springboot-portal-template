@@ -38,7 +38,6 @@ public class TodoController {
 	private static final String LIST = "todo-sample-feature/todo-list";
 
 	// Message constants
-
 	static final String API_CREATE_ERROR = "message.api.create.error.message";
 	static final String API_CREATE_SUCCESS = "message.api.create.success.message";
 	static final String API_DELETE_ERROR = "message.api.delete.error.message";

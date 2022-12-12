@@ -2,6 +2,8 @@ package com.inacioferrarini.template.portal.sample.todosamplefeature.dtos;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class TodoDto {
 
 	public enum StatusType {
@@ -11,7 +13,8 @@ public class TodoDto {
 	private final Long id;
 	private final String name;
 	private final String description;
-	private final LocalDate creationDate; // TODO: Json value conversion is failing
+	@JsonProperty("creation_date")
+	private final LocalDate creationDate;
 	private final StatusType status;
 
 	public TodoDto(

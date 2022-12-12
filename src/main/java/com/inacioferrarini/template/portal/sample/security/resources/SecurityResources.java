@@ -24,13 +24,7 @@ public class SecurityResources {
 				.concat(SecurityResources.Paths.Security.LOGIN);
 			public static final String LOGIN_PROCESS = SecurityResources.Paths.Security.ROOT
 				.concat(SecurityResources.Paths.Security.LOGIN);
-//
-//
-// TODO: Create a Dashboard entry point
-public static final String LOGIN_SUCCESS = TodoFeatureResources.Paths.ToDo.ROOT;
-//
-//
-//
+			public static final String LOGIN_SUCCESS = TodoFeatureResources.Paths.ToDo.ROOT;
 			public static final String LOGOUT = SecurityResources.Paths.Security.ROOT
 				.concat(SecurityResources.Paths.Security.LOGOUT);
 			public static final String LOGOUT_SUCCESS = SecurityResources.Paths.Security.ROOT

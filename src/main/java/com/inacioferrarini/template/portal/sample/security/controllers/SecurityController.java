@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -31,11 +33,19 @@ import com.inacioferrarini.template.portal.sample.security.resources.SecurityRes
 @RequestMapping(SecurityResources.Paths.Security.ROOT)
 public class SecurityController {
 
-	// TODO: Create Constants for properties
 	private static final String TOKEN_KEY = "token";
+
+	// Message constants
+	static final String MSG_ACTIVATE_ACCOUNT_SUCCESS = "message.security.account.activation.success";
+	static final String MSG_FORGOT_PASSWORD = "message.security.account.forgotPassword";
+	static final String MSG_FORGOT_USERNAME = "message.security.account.forgotUsername";
+	static final String MSG_PASSWORD_RESET_SUCCESS = "message.security.account.passwordResetSuccess";
 
 	@Autowired
 	private SecurityApiService api;
+
+	@Autowired
+	private MessageSource messageSource;
 
 	@GetMapping(SecurityResources.Paths.Security.LOGIN)
 	public String showLoginPage(
@@ -54,7 +64,7 @@ public class SecurityController {
 			// TODO: Validate return code
 
 			UserMessageHelper.setGlobalSuccessMessage(
-				"Activate Account - Success",
+				getMessage(MSG_ACTIVATE_ACCOUNT_SUCCESS),
 				redirectAttributes
 			);
 		} catch (BadRequest exception) {
@@ -93,7 +103,7 @@ public class SecurityController {
 			// TODO: Validate return code
 
 			UserMessageHelper.setGlobalSuccessMessage(
-				"Forgot username - email sent",
+				getMessage(MSG_FORGOT_USERNAME),
 				redirectAttributes
 			);
 		} catch (BadRequest exception) {
@@ -132,7 +142,7 @@ public class SecurityController {
 			// TODO: Validate return code
 
 			UserMessageHelper.setGlobalSuccessMessage(
-				"Forgot password - email sent",
+				getMessage(MSG_FORGOT_PASSWORD),
 				redirectAttributes
 			);
 		} catch (BadRequest exception) {
@@ -175,7 +185,7 @@ public class SecurityController {
 			// TODO: Validate return code
 
 			UserMessageHelper.setGlobalSuccessMessage(
-				"Password Reset Success",
+				getMessage(MSG_PASSWORD_RESET_SUCCESS),
 				redirectAttributes
 			);
 		} catch (BadRequest exception) {
@@ -187,6 +197,10 @@ public class SecurityController {
 		}
 
 		return new ModelAndView(new RedirectView(SecurityResources.Paths.Configuration.LOGIN_PAGE, true));
+	}
+
+	private String getMessage(final String key) {
+		return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
 	}
 
 }

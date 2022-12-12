@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -32,11 +34,17 @@ import com.inacioferrarini.template.portal.sample.security.resources.SecurityRes
 @RequestMapping(SecurityResources.Paths.Security.ROOT)
 public class RegisterAccountController {
 
+	// Message constants
+	static final String MSG_REGISTRATION_EMAIL_SENT = "message.security.account.registration.emailSent";	
+	
 	@Autowired
 	private SecurityApiService api;
 
 	@Autowired
 	private LocaleResolver localeResolver;
+	
+	@Autowired
+	private MessageSource messageSource;
 
 	@GetMapping(SecurityResources.Paths.Security.REGISTER_ACCOUNT)
 	public String showRegisterAccountForm(
@@ -65,9 +73,8 @@ public class RegisterAccountController {
 				form.getPassword()
 			);
 
-			// TODO: Message from bundle
 			UserMessageHelper.setGlobalSuccessMessage(
-				"Register Account - activation email sent",
+				getMessage(MSG_REGISTRATION_EMAIL_SENT),
 				redirectAttributes
 			);
 
@@ -103,6 +110,10 @@ public class RegisterAccountController {
 			Locale.forLanguageTag("pt-BR")
 		);
 		form.setSupportedIdiomList(idioms);
+	}
+	
+	private String getMessage(final String key) {
+		return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
 	}
 
 }
