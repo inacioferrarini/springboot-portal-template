@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.inacioferrarini.template.portal.sample.core.api.dtos.RestPage;
+import com.inacioferrarini.template.portal.sample.core.api.errors.exceptions.UnexpectedValueException;
 import com.inacioferrarini.template.portal.sample.core.messages.UserMessageHelper;
 import com.inacioferrarini.template.portal.sample.security.components.AuthenticationService;
 import com.inacioferrarini.template.portal.sample.todosamplefeature.apis.services.TodoApiService;
@@ -74,7 +76,8 @@ public class TodoController {
 				page,
 				size
 			);
-
+			ensure(apiResponse.getStatusCode(), HttpStatus.OK);
+			
 			model.addAttribute("name", name);
 			model.addAttribute("description", description);
 			model.addAttribute("page", apiResponse.getBody().getNumber() + 1);
@@ -124,6 +127,7 @@ public class TodoController {
 				form.getDescription(),
 				form.getStatus()
 			);
+			ensure(apiResponse.getStatusCode(), HttpStatus.CREATED);
 
 			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(API_CREATE_SUCCESS),
@@ -151,6 +155,7 @@ public class TodoController {
 				authenticationService.getUser().getToken(),
 				id
 			);
+			ensure(apiResponse.getStatusCode(), HttpStatus.OK);
 
 			model.addAttribute("action", TodoFeatureResources.Paths.ToDo.ROOT + "/update/" + id);
 			populateDropDowns(form);
@@ -190,6 +195,7 @@ public class TodoController {
 				form.getDescription(),
 				form.getStatus()
 			);
+			ensure(apiResponse.getStatusCode(), HttpStatus.OK);
 
 			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(API_UPDATE_SUCCESS),
@@ -215,10 +221,11 @@ public class TodoController {
 		RedirectAttributes redirectAttributes
 	) {
 		try {
-			api.delete(
+			ResponseEntity<String> apiResponse = api.delete(
 				authenticationService.getUser().getToken(),
 				id
 			);
+			ensure(apiResponse.getStatusCode(), HttpStatus.NO_CONTENT);			
 
 			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(API_DELETE_SUCCESS),
@@ -245,10 +252,11 @@ public class TodoController {
 		RedirectAttributes redirectAttributes
 	) {
 		try {
-			api.deleteMany(
+			ResponseEntity<String> apiResponse = api.deleteMany(
 				authenticationService.getUser().getToken(),
 				idList
 			);
+			ensure(apiResponse.getStatusCode(), HttpStatus.NO_CONTENT);			
 
 			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(API_DELETE_MANY_SUCCESS),
@@ -284,6 +292,12 @@ public class TodoController {
 
 	private String getMessage(final String key) {
 		return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
+	}
+
+	private <T> void ensure(final T value, final T expectedValue) {
+		if (value != expectedValue) {
+			throw new UnexpectedValueException();
+		}
 	}
 
 }

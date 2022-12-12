@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.inacioferrarini.template.portal.sample.core.api.errors.exceptions.UnexpectedValueException;
 import com.inacioferrarini.template.portal.sample.core.messages.UserMessageHelper;
 import com.inacioferrarini.template.portal.sample.security.api.responses.ActivateUserAccountApiResponseDto;
 import com.inacioferrarini.template.portal.sample.security.api.responses.ForgotPasswordApiResponseDto;
@@ -35,7 +37,6 @@ public class SecurityController {
 
 	private static final String TOKEN_KEY = "token";
 
-	// Message constants
 	static final String MSG_ACTIVATE_ACCOUNT_SUCCESS = "message.security.account.activation.success";
 	static final String MSG_FORGOT_PASSWORD = "message.security.account.forgotPassword";
 	static final String MSG_FORGOT_USERNAME = "message.security.account.forgotUsername";
@@ -61,7 +62,7 @@ public class SecurityController {
 	) {
 		try {
 			ResponseEntity<ActivateUserAccountApiResponseDto> apiResponse = api.activateAccount(token);
-			// TODO: Validate return code
+			ensure(apiResponse.getStatusCode(), HttpStatus.OK);
 
 			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(MSG_ACTIVATE_ACCOUNT_SUCCESS),
@@ -100,7 +101,7 @@ public class SecurityController {
 			ResponseEntity<ForgotUsernameApiResponseDto> apiResponse = api.forgotUsername(
 				form.getEmail()
 			);
-			// TODO: Validate return code
+			ensure(apiResponse.getStatusCode(), HttpStatus.OK);
 
 			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(MSG_FORGOT_USERNAME),
@@ -139,7 +140,7 @@ public class SecurityController {
 			ResponseEntity<ForgotPasswordApiResponseDto> apiResponse = api.forgotPassword(
 				form.getUsername()
 			);
-			// TODO: Validate return code
+			ensure(apiResponse.getStatusCode(), HttpStatus.OK);
 
 			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(MSG_FORGOT_PASSWORD),
@@ -182,7 +183,7 @@ public class SecurityController {
 				form.getToken(),
 				form.getNewPassword()
 			);
-			// TODO: Validate return code
+			ensure(apiResponse.getStatusCode(), HttpStatus.OK);
 
 			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(MSG_PASSWORD_RESET_SUCCESS),
@@ -201,6 +202,12 @@ public class SecurityController {
 
 	private String getMessage(final String key) {
 		return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
+	}
+	
+	private <T> void ensure(final T value, final T expectedValue) {
+		if (value != expectedValue) {
+			throw new UnexpectedValueException();
+		}
 	}
 
 }

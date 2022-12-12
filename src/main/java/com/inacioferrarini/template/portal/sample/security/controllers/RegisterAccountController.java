@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.inacioferrarini.template.portal.sample.core.api.errors.exceptions.UnexpectedValueException;
 import com.inacioferrarini.template.portal.sample.core.messages.UserMessageHelper;
 import com.inacioferrarini.template.portal.sample.security.api.responses.RegisterAccountApiResponseDto;
 import com.inacioferrarini.template.portal.sample.security.api.services.SecurityApiService;
@@ -72,14 +74,12 @@ public class RegisterAccountController {
 				form.getEmail(),
 				form.getPassword()
 			);
+			ensure(apiResponse.getStatusCode(), HttpStatus.CREATED);			
 
 			UserMessageHelper.setGlobalSuccessMessage(
 				getMessage(MSG_REGISTRATION_EMAIL_SENT),
 				redirectAttributes
 			);
-
-			System.out.println("Received status: " + apiResponse.getBody().getStatus());
-			System.out.println("Received message: " + apiResponse.getBody().getMessage());
 		} catch (BadRequest | Conflict exception) {
 			UserMessageHelper.setGlobalErrorMessage(
 				exception.getResponseBodyAsString(),
@@ -115,5 +115,11 @@ public class RegisterAccountController {
 	private String getMessage(final String key) {
 		return messageSource.getMessage(key, null, LocaleContextHolder.getLocale());
 	}
+	
+	private <T> void ensure(final T value, final T expectedValue) {
+		if (value != expectedValue) {
+			throw new UnexpectedValueException();
+		}
+	}	
 
 }
