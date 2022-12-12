@@ -17,9 +17,9 @@
 			</div>
             <div class="col p-0">
                 <div class="container medium-form">
-					<h1 class="mt-3 mb-3"><span th:text="#{title.todo}"></span></h1>
-                	<div th:replace="~{common/messages :: global-message}"></div>
 					<form th:action="@{${action}}" th:object="${todoForm}" class="card-body" method="post" id="todoForm">
+						<h2 th:text="#{${action.endsWith('/add') ? 'title.todo.new' : 'title.todo.edit'}}"></h2>
+    	            	<div th:replace="~{common/messages :: global-message}"></div>
 						<div class="row mb-3">
 							<label for="name" class="col-sm-2 col-form-label"><span th:text="#{field.todo.name}"></span>&nbsp;<span class="requiredField">*</span></label>
 							<div class="col-sm-10">
