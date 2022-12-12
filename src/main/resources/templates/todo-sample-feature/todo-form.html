@@ -44,12 +44,12 @@
 									<option th:each="status : *{statusList}" th:value="${status.name}" th:text="${status}"></option>
 								</select>				
 								<small id="statusHelpBlock" class="form-text text-muted"><span th:text="#{field.todo.status.description}"></span></small>
-								<div class="invalid-feedback"><span th:text="#{field.language.errorFeedback}"></span></div>	
+								<div class="invalid-feedback"><span th:text="#{field.todo.status.errorFeedback}"></span></div>	
 							</div>
 						</div>
 						<button class="btn btn-primary" type="submit"><span th:text="#{action.todo.save}"></span></button>
-						<button class="btn btn-danger" type="reset"><span th:text="#{label.action.reset}"></span></button>
-						<a class="btn btn-secondary rightAlign" th:href="@{/todos}"><span th:text="#{label.action.goBack}"></span></a>
+						<button class="btn btn-danger" type="reset"><span th:text="#{action.reset}"></span></button>
+						<a class="btn btn-secondary rightAlign" th:href="@{/todos}"><span th:text="#{action.goBack}"></span></a>
 					</form>
                 </div>
             </div>

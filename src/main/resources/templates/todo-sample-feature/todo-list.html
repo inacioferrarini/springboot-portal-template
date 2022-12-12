@@ -36,8 +36,8 @@
 									<input type="text" class="form-control" name="description" th:value="${description}">
 								</div>
 							</div>
-							<button class="btn btn-outline-primary" type="submit"><span th:text="#{label.action.filter}"></span></button>
-							<button class="btn btn-outline-danger" type="reset"><span th:text="#{label.action.reset}"></span></button>
+							<button class="btn btn-outline-primary" type="submit"><span th:text="#{action.filter}"></span></button>
+							<button class="btn btn-outline-danger" type="reset"><span th:text="#{action.reset}"></span></button>
 						</form>
 					</fieldset>
 					<div class="toolbar mb-1">
@@ -65,9 +65,9 @@
 									th:data-bs-delete-url="@{/todos/delete?idList=IDLIST&name={name}&description={description}&page={page}&size={size}(name=${name}, description=${description}, page=${page}, size=${size})}"
 									th:data-bs-modal-title="#{title.modal.delete.many}"
 									th:data-bs-modal-text="#{message.modal.delete.many}">
-									<i class="bi bi-trash-fill"></i>&nbsp;<span th:text="#{label.action.removeSelected}"></span>
+									<i class="bi bi-trash-fill"></i>&nbsp;<span th:text="#{action.removeSelected}"></span>
 								</button>
-								<a class="btn btn-outline-primary rounded" th:href="@{/todos/add}"><i class="bi bi-plus-circle-fill"></i>&nbsp;<span th:text="#{label.action.new}"></span></a>
+								<a class="btn btn-outline-primary rounded" th:href="@{/todos/add}"><i class="bi bi-plus-circle-fill"></i>&nbsp;<span th:text="#{action.new}"></span></a>
 							</div>
 						</div>
 					</div>

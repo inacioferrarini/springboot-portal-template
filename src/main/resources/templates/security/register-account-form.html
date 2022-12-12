@@ -15,54 +15,54 @@
 			<form th:action="@{/security/registerAccount}" th:object="${registerAccountForm}" class="card-body" method="post" id="createAccountForm">
 				<h2 th:text="#{title.security.createAccount}"></h2>
 				<div class="row mb-3">
-					<label for="idiom" class="col-sm-2 col-form-label"><span th:text="#{field.language}"></span>&nbsp;<span class="requiredField">*</span></label>
+					<label for="idiom" class="col-sm-2 col-form-label"><span th:text="#{field.security.language}"></span>&nbsp;<span class="requiredField">*</span></label>
 					<div class="col-sm-10">
 						<select class="form-select" th:field="*{idiom}" onChange="changeIdiom();">
 							<option selected disabled value="">[[#{field.select.defaultOption}]]</option>
 							<option th:each="idiom : *{supportedIdiomList}" th:value="${idiom.toLanguageTag()}" th:text="${idiom.getDisplayName(idiom)}"></option>
 						</select>				
-						<small id="idiomHelpBlock" class="form-text text-muted"><span th:text="#{field.language.description}"></span></small>
-						<div class="invalid-feedback"><span th:text="#{field.language.errorFeedback}"></span></div>	
+						<small id="idiomHelpBlock" class="form-text text-muted"><span th:text="#{field.security.language.description}"></span></small>
+						<div class="invalid-feedback"><span th:text="#{field.security.language.errorFeedback}"></span></div>	
 					</div>
 				</div>
 				<div class="row mb-3">
-					<label for="username" class="col-sm-2 col-form-label"><span th:text="#{field.username}"></span>&nbsp;<span class="requiredField">*</span></label>
+					<label for="username" class="col-sm-2 col-form-label"><span th:text="#{field.security.username}"></span>&nbsp;<span class="requiredField">*</span></label>
 					<div class="col-sm-10">
-						<input th:field="*{username}" th:errorclass="is-invalid" class="form-control" th:placeholder="#{field.username}" />
-						<small id="usernameHelpBlock" class="form-text text-muted"><span th:text="#{field.username.description}"></span></small>
-						<div class="invalid-feedback"><span th:text="#{field.username.errorFeedback}"></span></div>	
+						<input th:field="*{username}" th:errorclass="is-invalid" class="form-control" th:placeholder="#{field.security.username}" />
+						<small id="usernameHelpBlock" class="form-text text-muted"><span th:text="#{field.security.username.description}"></span></small>
+						<div class="invalid-feedback"><span th:text="#{field.security.username.errorFeedback}"></span></div>	
 					</div>
 				</div>
 				<div class="row mb-3">
-					<label for="email" class="col-sm-2 col-form-label"><span th:text="#{field.email}"></span>&nbsp;<span class="requiredField">*</span></label>
+					<label for="email" class="col-sm-2 col-form-label"><span th:text="#{field.security.email}"></span>&nbsp;<span class="requiredField">*</span></label>
 					<div class="col-sm-10">
-						<input th:field="*{email}" th:errorclass="is-invalid" class="form-control" th:placeholder="#{field.email}" />
-						<small id="emailHelpBlock" class="form-text text-muted"><span th:text="#{field.email.description}"></span></small>
-						<div class="invalid-feedback"><span th:text="#{field.email.errorFeedback}"></span></div>
+						<input th:field="*{email}" th:errorclass="is-invalid" class="form-control" th:placeholder="#{field.security.email}" />
+						<small id="emailHelpBlock" class="form-text text-muted"><span th:text="#{field.security.email.description}"></span></small>
+						<div class="invalid-feedback"><span th:text="#{field.security.email.errorFeedback}"></span></div>
 					</div>
 				</div>
 				<div class="row mb-3">
-					<label for="password" class="col-sm-2 col-form-label"><span th:text="#{field.password}"></span>&nbsp;<span class="requiredField">*</span></label>
+					<label for="password" class="col-sm-2 col-form-label"><span th:text="#{field.security.password}"></span>&nbsp;<span class="requiredField">*</span></label>
 					<div class="col-sm-10">
 						<input type="password" th:field="*{password}" th:errorclass="is-invalid" class="form-control" />
-						<small id="passwordHelpBlock" class="form-text text-muted"><span th:text="#{field.password.description}"></span></small>
-						<div class="invalid-feedback"><span th:text="#{field.password.errorFeedback}"></span></div>		
+						<small id="passwordHelpBlock" class="form-text text-muted"><span th:text="#{field.security.password.description}"></span></small>
+						<div class="invalid-feedback"><span th:text="#{field.security.password.errorFeedback}"></span></div>		
 					</div>
 				</div>
 				<div class="row mb-3">
-					<label for="passwordConfirmation" class="col-sm-2 col-form-label"><span th:text="#{field.passwordConfirmation}"></span>&nbsp;<span class="requiredField">*</span></label>
+					<label for="passwordConfirmation" class="col-sm-2 col-form-label"><span th:text="#{field.security.passwordConfirmation}"></span>&nbsp;<span class="requiredField">*</span></label>
 					<div class="col-sm-10">
 						<input type="password" th:field="*{passwordConfirmation}" th:errorclass="is-invalid" class="form-control" />
-						<small id="passwordConfirmationHelpBlock" class="form-text text-muted"><span th:text="#{field.passwordConfirmation.description}"></span></small>
-						<div class="invalid-feedback"><span th:text="#{field.passwordConfirmation.errorFeedback}"></span></div>		
+						<small id="passwordConfirmationHelpBlock" class="form-text text-muted"><span th:text="#{field.security.passwordConfirmation.description}"></span></small>
+						<div class="invalid-feedback"><span th:text="#{field.security.passwordConfirmation.errorFeedback}"></span></div>		
 					</div>
 				</div>
 				<div class="row mb-3">
 					<div class="col-form-check">
 						<input class="form-check-input" type="checkbox" th:field="*{agreedToTerms}" th:errorclass="is-invalid">
 						<label class="form-check-label" for="agreedToTerms">
-						<span th:text="#{field.agreeToTerms.description}"></span></label>
-						<div class="invalid-feedback"><span th:text="#{field.agreeToTerms.errorFeedback}"></span></div>		
+						<span th:text="#{field.security.agreeToTerms.description}"></span></label>
+						<div class="invalid-feedback"><span th:text="#{field.security.agreeToTerms.errorFeedback}"></span></div>		
 					</div>							
 				</div>
 				<button class="btn btn-primary col-4" type="submit">
