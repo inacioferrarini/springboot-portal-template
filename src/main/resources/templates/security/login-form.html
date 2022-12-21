@@ -15,17 +15,17 @@
 				<h2 th:text="#{title.security.login}"></h2>
 				<div class="col-12 my-3">
 					<label for="username" class="form-label"><span th:text="#{field.security.username}"></span></label>
+					<a class="rightAlign" th:href="@{/security/forgotUsername}" href="#"><span th:text="#{action.security.forgotUsername}"></span></a>					
 					<input name="username" class="form-control" th:placeholder="#{field.security.username}" />
 				</div>
 				<div class="col-12 my-3">
 					<label for="password" class="form-label"><span th:text="#{field.security.password}"></span></label>
+					<a class="rightAlign" th:href="@{/security/forgotPassword}" href="#"><span th:text="#{action.security.forgotPassword}"></span></a>
 					<input type="password" name="password" class="form-control" th:placeholder="#{field.security.password}" />
 				</div>
 				<button class="btn btn-primary col-12" type="submit">
 					<span th:text="#{action.security.doLogin}"></span>
 				</button>
-				<!-- Add Remember Me -->
-				<!-- Add Forgot Password -->
 			</form>
 			<p class="text-center"><a th:href="@{/security/registerAccount}" href="#"><span th:text="#{action.security.createAccount}"></span></a></p>
 		</div>
