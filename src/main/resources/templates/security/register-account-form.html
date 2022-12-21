@@ -20,9 +20,9 @@
 						<select class="form-select" th:field="*{idiom}" onChange="changeIdiom();">
 							<option selected disabled value="">[[#{field.select.defaultOption}]]</option>
 							<option th:each="idiom : *{supportedIdiomList}" th:value="${idiom.toLanguageTag()}" th:text="${idiom.getDisplayName(idiom)}"></option>
-						</select>				
+						</select>
 						<small id="idiomHelpBlock" class="form-text text-muted"><span th:text="#{field.security.language.description}"></span></small>
-						<div class="invalid-feedback"><span th:text="#{field.security.language.errorFeedback}"></span></div>	
+						<div class="invalid-feedback"><span th:text="#{field.security.language.errorFeedback}"></span></div>
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -30,7 +30,7 @@
 					<div class="col-sm-10">
 						<input th:field="*{username}" th:errorclass="is-invalid" class="form-control" th:placeholder="#{field.security.username}" />
 						<small id="usernameHelpBlock" class="form-text text-muted"><span th:text="#{field.security.username.description}"></span></small>
-						<div class="invalid-feedback"><span th:text="#{field.security.username.errorFeedback}"></span></div>	
+						<div class="invalid-feedback"><span th:text="#{field.security.username.errorFeedback}"></span></div>
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -46,7 +46,7 @@
 					<div class="col-sm-10">
 						<input type="password" th:field="*{password}" th:errorclass="is-invalid" class="form-control" />
 						<small id="passwordHelpBlock" class="form-text text-muted"><span th:text="#{field.security.password.description}"></span></small>
-						<div class="invalid-feedback"><span th:text="#{field.security.password.errorFeedback}"></span></div>		
+						<div class="invalid-feedback"><span th:text="#{field.security.password.errorFeedback}"></span></div>
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -54,7 +54,7 @@
 					<div class="col-sm-10">
 						<input type="password" th:field="*{passwordConfirmation}" th:errorclass="is-invalid" class="form-control" />
 						<small id="passwordConfirmationHelpBlock" class="form-text text-muted"><span th:text="#{field.security.passwordConfirmation.description}"></span></small>
-						<div class="invalid-feedback"><span th:text="#{field.security.passwordConfirmation.errorFeedback}"></span></div>		
+						<div class="invalid-feedback"><span th:text="#{field.security.passwordConfirmation.errorFeedback}"></span></div>
 					</div>
 				</div>
 				<div class="row mb-3">
@@ -63,13 +63,13 @@
 						<label class="form-check-label" for="agreedToTerms">
 						<span th:text="#{field.security.agreeToTerms.description}"></span></label>
 						<div class="invalid-feedback"><span th:text="#{field.security.agreeToTerms.errorFeedback}"></span></div>		
-					</div>							
+					</div>
 				</div>
 				<button class="btn btn-primary col-4" type="submit">
 					<span th:text="#{action.security.createAccount}"></span>
-				</button>				
+				</button>
 			</form>
 		</div>
-		</div>
+	</div>
 </body>
 </html>

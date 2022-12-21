@@ -25,7 +25,7 @@
 							<div class="col-sm-10">
 								<input th:field="*{name}" th:errorclass="is-invalid" class="form-control" th:placeholder="#{field.todo.name}" />
 								<small id="nameHelpBlock" class="form-text text-muted"><span th:text="#{field.todo.name.description}"></span></small>
-								<div class="invalid-feedback"><span th:text="#{field.todo.name.errorFeedback}"></span></div>	
+								<div class="invalid-feedback"><span th:text="#{field.todo.name.errorFeedback}"></span></div>
 							</div>
 						</div>
 						<div class="row mb-3">
@@ -42,9 +42,9 @@
 								<select class="form-select" th:field="*{status}">
 									<option selected disabled value="">[[#{field.select.defaultOption}]]</option>
 									<option th:each="status : *{statusList}" th:value="${status.name}" th:text="${status}"></option>
-								</select>				
+								</select>
 								<small id="statusHelpBlock" class="form-text text-muted"><span th:text="#{field.todo.status.description}"></span></small>
-								<div class="invalid-feedback"><span th:text="#{field.todo.status.errorFeedback}"></span></div>	
+								<div class="invalid-feedback"><span th:text="#{field.todo.status.errorFeedback}"></span></div>
 							</div>
 						</div>
 						<button class="btn btn-primary" type="submit"><span th:text="#{action.todo.save}"></span></button>

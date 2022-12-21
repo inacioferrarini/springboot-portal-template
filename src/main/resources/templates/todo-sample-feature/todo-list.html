@@ -75,13 +75,15 @@
 						<span th:text="#{label.noDataFound}"></span>
 					</div>
 					<div class="table-responsive" th:if="${todoList.content.size() > 0}">
-						<table id="contentList" class="table table-bordred table-striped table-sm"   >
+						<table id="contentList" class="table table-bordred table-striped table-sm">
 							<thead class="tableHeader">
-								<th class="text-center"><input class="form-check-input" type="checkbox" id="checkAllItems" onChange="selectOrUnselectAllItems();updateDeleteAll();" /></th>
-								<th th:text="#{label.name}"></th>
-								<th th:text="#{label.description}"></th>
-								<th th:text="#{label.status}"></th>
-								<th class="text-center toolColumn" th:text="#{label.actions}"></th>
+								<tr>
+									<th class="text-center"><input class="form-check-input" type="checkbox" id="checkAllItems" onChange="selectOrUnselectAllItems();updateDeleteAll();" /></th>
+									<th th:text="#{label.name}"></th>
+									<th th:text="#{label.description}"></th>
+									<th th:text="#{label.status}"></th>
+									<th class="text-center toolColumn" th:text="#{label.actions}"></th>
+								</tr>
 							</thead>
 							<tbody class="tableBody">
 								<tr th:each="todo : ${todoList.content}">
